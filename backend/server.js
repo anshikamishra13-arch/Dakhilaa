@@ -11,7 +11,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // Database connection
-const connectDB = require('./backend/config/db');
+const connectDB = require('./config/db');
 connectDB();
 
 const app = express();
@@ -28,11 +28,11 @@ app.use(
 );
 
 // ─── Routes ──────────────────────────────────────────────────────────────────
-app.use('/api/auth',        require('./backend/routes/auth'));
+app.use('/api/auth',        require('./routes/auth'));
 app.use('/api/leads',       require('./backend/routes/leads'));
-app.use('/api/diagnostic',  require('./backend/routes/diagnostic'));
-app.use('/api/payment',     require('./backend/routes/payment'));
-app.use('/api/user',        require('./backend/routes/user'));
+app.use('/api/diagnostic',  require('./routes/diagnostic'));
+app.use('/api/payment',     require('./routes/payment'));
+app.use('/api/user',        require('./routes/user'));
 
 // ─── Health Check ────────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {
