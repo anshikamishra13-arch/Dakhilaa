@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Lead = require('../models/Lead');
+const Lead = require('../models/lead');
 const { emailTemplates, sendEmail } = require('../config/email');
 
 // POST /api/leads/diagnostic-signup  — landing page form (no login required)

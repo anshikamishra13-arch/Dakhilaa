@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Dakhilaa — Find your weakest JEE topics in 15 minutes. Precision diagnostics, college predictor, and targeted daily practice."/>
+  <meta name="keywords" content="JEE prep, JEE diagnostic, IIT college predictor, weak topics, JEE Mains, JEE Advanced"/>
+  <meta property="og:title" content="Dakhilaa — Find Your Weakest JEE Topics"/>
+  <meta property="og:description" content="15-minute diagnostic test that tells you exactly what to study next."/>
+  <meta property="og:type" content="website"/>
+  <title>Dakhilaa — Find Your Weakest JEE Topics in 15 Minutes</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+  <link rel="stylesheet" href="assets/css/components.css"/>
+  <link rel="stylesheet" href="assets/css/responsive.css"/>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav id="navbar">
+    <div class="nav-logo" onclick="scrollToTop()">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+    <div class="nav-right">
+      <button class="nbtn nbtn-ghost" onclick="scrollToSection('pricing')">Pricing</button>
+      <button class="nbtn nbtn-primary" onclick="openModal()">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-badge">🎯 15-Minute Diagnostic Test</div>
+    <h1>Find Your <span class="hl">Weakest<br/>JEE Topics</span> in Minutes</h1>
+    <p class="hero-sub">
+      The <strong>only</strong> platform that tells you exactly which topics to
+      study next — based on your specific performance gaps. Not guesswork.
+      Precision diagnostics.
+    </p>
+    <div class="cta-row">
+      <button class="btn-big btn-primary" onclick="openModal()">Take Free Diagnostic →</button>
+      <button class="btn-big btn-ghost" onclick="scrollToSection('how')">How it Works</button>
+    </div>
+    <div class="proof-row">
+      <div class="proof-item">✅ <strong>Free Diagnostic</strong></div>
+      <div class="proof-item">✅ <strong>15 Minutes</strong></div>
+      <div class="proof-item">✅ <strong>Instant Results</strong></div>
+    </div>
+    <div class="subj-pills">
+      <div class="sp sp-phy">⚡ Physics</div>
+      <div class="sp sp-che">🧪 Chemistry</div>
+      <div class="sp sp-mat">📐 Mathematics</div>
+    </div>
+  </section>
+
+  <!-- ── Stats Bar ── -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat"><div class="stat-n">50K+</div><div class="stat-l">Students Tested</div></div>
+      <div class="stat"><div class="stat-n">10K+</div><div class="stat-l">Real JEE Questions</div></div>
+      <div class="stat"><div class="stat-n">95%</div><div class="stat-l">Diagnostic Accuracy</div></div>
+      <div class="stat"><div class="stat-n">Free</div><div class="stat-l">Diagnostic Always</div></div>
+    </div>
+  </div>
+
+  <!-- ── How It Works ── -->
+  <section class="sec" id="how">
+    <div class="sec-eyebrow">HOW IT WORKS</div>
+    <div class="sec-title">3 Steps to Know<br/>Your Weak Topics</div>
+    <div class="sec-sub">A data-driven approach to find exactly what's holding you back.</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <h3>Take the 15-Min Diagnostic</h3>
+          <p>Answer 30 questions across Physics, Chemistry, and Math. The test is adaptive — it adjusts difficulty as you go, so every answer tells us something meaningful about your gaps.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <h3>Get Your Weak Topic Report</h3>
+          <p>See exactly which topics are costing you marks, how many points you're losing per exam, and your current JEE readiness score with a detailed breakdown.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <h3>See Your College Path</h3>
+          <p>Based on your current score, see which IITs and NITs are within reach — branch-by-branch — and exactly what marks you need to close the gap.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Features ── -->
+  <section class="sec">
+    <div class="sec-eyebrow">WHY DAKHILAA</div>
+    <div class="sec-title">The Smart Way to Prep</div>
+    <div class="sec-sub">Not another test series. A precision diagnostic tool built specifically for JEE.</div>
+    <div class="feat-grid">
+      <div class="fc"><div class="fc-icon">🎯</div><h3>Weakness Finder</h3><p>Pinpoints the exact 2–3 topics costing you the most marks. Stop studying what you already know.</p></div>
+      <div class="fc"><div class="fc-icon">📊</div><h3>Score Gap Analysis</h3><p>Shows the precise gap between your current score and your dream college — and the fastest path to close it.</p></div>
+      <div class="fc"><div class="fc-icon">🏆</div><h3>Branch-wise Predictor</h3><p>Real cutoffs for every branch at every IIT and NIT. Know your options, not just your rank.</p></div>
+      <div class="fc"><div class="fc-icon">⚡</div><h3>Daily Targeted Practice</h3><p>Get questions curated for your exact weak topics every day. Consistent, focused improvement.</p></div>
+      <div class="fc"><div class="fc-icon">🔄</div><h3>Track Your Progress</h3><p>Retake the diagnostic anytime to measure how much your weak topics have improved.</p></div>
+      <div class="fc"><div class="fc-icon">🤖</div><h3>AI Study Planner</h3><p>An AI-powered daily schedule that adapts to your weak topics, time available, and exam timeline.</p></div>
+    </div>
+  </section>
+
+  <!-- ── College Predictor ── -->
+  <div class="pred-outer" id="predictor">
+    <div style="max-width:1060px;margin:0 auto">
+      <div class="sec-eyebrow">COLLEGE PREDICTOR</div>
+      <div class="sec-title" style="margin-bottom:8px">See Your Dream College Path</div>
+      <div class="sec-sub">Branch-wise cutoffs for all IITs, NITs, and IIITs — instantly.</div>
+      <div class="pred-card">
+        <div class="pred-card-title">Check Your Cutoff &amp; Score Gap</div>
+        <div class="pred-card-sub">Enter your current score and select a college to see which branches are within reach.</div>
+        <div class="pred-inputs">
+          <div class="ig">
+            <label>Your Current Score</label>
+            <input type="number" id="pm" placeholder="e.g., 220" min="0" max="300"/>
+          </div>
+          <div class="ig">
+            <label>Target College</label>
+            <select id="pc">
+              <option value="">— Select College —</option>
+              <optgroup label="IIT Tier 1">
+                <option value="iitb">IIT Bombay</option>
+                <option value="iitd">IIT Delhi</option>
+                <option value="iitm">IIT Madras</option>
+              </optgroup>
+              <optgroup label="IIT Tier 2">
+                <option value="iitk">IIT Kanpur</option>
+                <option value="iitr">IIT Roorkee</option>
+                <option value="iith">IIT Hyderabad</option>
+              </optgroup>
+              <optgroup label="IIT Tier 3">
+                <option value="iiti">IIT Indore</option>
+                <option value="iitbhu">IIT BHU</option>
+                <option value="iitg">IIT Guwahati</option>
+                <option value="iitkhg">IIT Kharagpur</option>
+              </optgroup>
+              <optgroup label="NIT Tier 1">
+                <option value="nitt">NIT Trichy</option>
+                <option value="nitw">NIT Warangal</option>
+                <option value="nitk">NIT Surathkal</option>
+              </optgroup>
+              <optgroup label="NIT Tier 2">
+                <option value="nitc">NIT Calicut</option>
+                <option value="nitd">NIT Delhi</option>
+                <option value="nitr">NIT Rourkela</option>
+              </optgroup>
+              <optgroup label="IIIT">
+                <option value="iiith">IIIT Hyderabad</option>
+                <option value="iiitd">IIIT Delhi</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <button class="btn-pred" id="pred-btn">Check Cutoff &amp; Gap →</button>
+        <div class="pred-result" id="pred-res"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Testimonials ── -->
+  <section class="sec">
+    <div class="sec-eyebrow">STUDENT STORIES</div>
+    <div class="sec-title">Real Students. Real Results.</div>
+    <div class="sec-sub">How students found their weak topics and turned things around.</div>
+    <div class="testi-grid">
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-q">I was stuck at 180 for 3 months. Dakhilaa found my weak topics in 15 minutes. Fixed 2 topics. Now scoring 240+. This is game-changing.</div>
+        <div class="tc-author"><div class="tc-av">R</div><div><div class="tc-name">Raj Kumar</div><div class="tc-detail">JEE 2025 · 99.2 Percentile</div></div></div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-q">Finally a platform that tells me exactly what to study. Not just content — direction. The weak topic finder is incredibly accurate.</div>
+        <div class="tc-author"><div class="tc-av">P</div><div><div class="tc-name">Priya Sharma</div><div class="tc-detail">JEE 2025 · Student</div></div></div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-q">I paid ₹1.2L for coaching with the same results. Dakhilaa for ₹1,099 actually helps me understand what I'm weak in and fix it.</div>
+        <div class="tc-author"><div class="tc-av">A</div><div><div class="tc-name">Akshay Patel</div><div class="tc-detail">JEE Advanced 2024</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Pricing ── -->
+  <section class="sec" id="pricing">
+    <div class="sec-eyebrow">PRICING</div>
+    <div class="sec-title">Choose Your Prep Path</div>
+    <div class="sec-sub">Annual plans with a free diagnostic included. No hidden costs.</div>
+    <div class="price-grid">
+      <div class="pc">
+        <div class="plan-name">Mains Prep</div>
+        <div class="plan-amt">₹799</div>
+        <div class="plan-per">per year · includes free diagnostic</div>
+        <div class="plan-div"></div>
+        <div class="pf-list">
+          <div class="pf"><span class="ck">✓</span> 15-min diagnostic test</div>
+          <div class="pf"><span class="ck">✓</span> <strong>10,000 Mains questions</strong></div>
+          <div class="pf"><span class="ck">✓</span> 30 chapter tests</div>
+          <div class="pf"><span class="ck">✓</span> Daily Mains practice</div>
+          <div class="pf"><span class="ck">✓</span> NIT college predictor</div>
+        </div>
+        <button class="btn-plan btn-pp" data-plan="Mains">Get Mains · ₹799/yr</button>
+      </div>
+      <div class="pc">
+        <div class="plan-name">Advanced Prep</div>
+        <div class="plan-amt">₹899</div>
+        <div class="plan-per">per year · includes free diagnostic</div>
+        <div class="plan-div"></div>
+        <div class="pf-list">
+          <div class="pf"><span class="ck">✓</span> 15-min diagnostic test</div>
+          <div class="pf"><span class="ck">✓</span> <strong>5,000 Advanced questions</strong></div>
+          <div class="pf"><span class="ck">✓</span> 50 advanced mock tests</div>
+          <div class="pf"><span class="ck">✓</span> Daily Advanced practice</div>
+          <div class="pf"><span class="ck">✓</span> IIT college predictor</div>
+        </div>
+        <button class="btn-plan btn-pp" data-plan="Advanced">Get Advanced · ₹899/yr</button>
+      </div>
+      <div class="pc pop">
+        <div class="plan-name">⭐ Mains + Advanced</div>
+        <div class="plan-amt">₹1,099</div>
+        <div class="plan-per">per year · save ₹599 vs buying both</div>
+        <div class="plan-div"></div>
+        <div class="pf-list">
+          <div class="pf"><span class="ck">✓</span> Everything in both plans</div>
+          <div class="pf"><span class="ck">✓</span> <strong>15,000+ total questions</strong></div>
+          <div class="pf"><span class="ck">✓</span> 100+ full-length mocks</div>
+          <div class="pf"><span class="ck">✓</span> Dual weak topic analysis</div>
+          <div class="pf"><span class="ck">✓</span> IIT + NIT predictors</div>
+          <div class="pf"><span class="ck">✓</span> AI study planner</div>
+          <div class="pf"><span class="ck">✓</span> Priority support</div>
+        </div>
+        <button class="btn-plan btn-pp" data-plan="Bundle">Get Bundle · ₹1,099/yr</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="sec">
+    <div class="sec-eyebrow">FAQ</div>
+    <div class="sec-title">Questions About Dakhilaa?</div>
+    <div class="faq-wrap">
+      <div class="faq-item">
+        <div class="faq-q">Can I take the diagnostic test for free?<span class="faq-ic">+</span></div>
+        <div class="faq-a">Yes — the 15-minute diagnostic test is free with all plans. You can take it before purchasing to understand your weak topics, then choose the right plan for your prep.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How is Dakhilaa different from Allen or Physics Wallah?<span class="faq-ic">+</span></div>
+        <div class="faq-a">Allen and PW give you content. Dakhilaa gives you direction. We tell you exactly which topic to study next based on your specific weaknesses — not a generic syllabus.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How accurate is the college predictor?<span class="faq-ic">+</span></div>
+        <div class="faq-a">The predictor uses real JEE cutoff data from recent years and shows branch-wise estimates. It's a realistic directional guide to help you understand how close you are to your dream branch.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I use Dakhilaa alongside my coaching?<span class="faq-ic">+</span></div>
+        <div class="faq-a">Absolutely. Use coaching for content depth. Use Dakhilaa to identify which areas need priority attention right now. They work best together.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if I'm preparing for both Mains and Advanced?<span class="faq-ic">+</span></div>
+        <div class="faq-a">The Mains + Advanced bundle at ₹1,099/year covers both. You get 15,000+ questions, dual weak topic analysis, 100+ mocks, and the AI study planner.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Final CTA ── -->
+  <div class="final-cta">
+    <div class="hero-badge" style="display:inline-flex;margin-bottom:24px">🎯 50,000+ Students Already Using Dakhilaa</div>
+    <h2>Stop Guessing.<br/>Start Knowing.</h2>
+    <p>Find your exact weak JEE topics in 15 minutes. Instant results. Start improving from day one.</p>
+    <button class="btn-big btn-primary" onclick="openModal()">Get Started Now →</button>
+    <small>Free diagnostic with all plans · Takes 15 minutes · Instant results</small>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="ft-inner">
+      <div class="ft-top">
+        <div>
+          <div class="ft-brand-name"><span>D</span>akhilaa</div>
+          <p class="ft-brand-desc">The precision diagnostic platform for JEE prep. Find your weak topics and fix them with targeted daily practice.</p>
+        </div>
+        <div class="ft-links">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#" onclick="openModal()">Get Started</a></li>
+            <li><a href="#predictor">College Predictor</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="pages/diagnostic.html">Diagnostic Test</a></li>
+          </ul>
+        </div>
+        <div class="ft-links">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://instagram.com/dakhilaa" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://facebook.com/dakhilaa" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://twitter.com/dakhilaa" target="_blank" rel="noopener">Twitter</a></li>
+            <li><a href="https://t.me/dakhilaa" target="_blank" rel="noopener">Telegram</a></li>
+            <li><a href="mailto:hello@dakhilaa.com">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ft-bottom">
+        <p>© 2025 Dakhilaa · Made for JEE aspirants who want precision prep.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Modal ── -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">×</button>
+      <h2 class="modal-title">Take the Diagnostic</h2>
+      <p class="modal-sub">Find your weak JEE topics in 15 minutes. Just your name and WhatsApp number — no account needed.</p>
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" id="rn" placeholder="Your full name"/>
+      </div>
+      <div class="input-group">
+        <label>WhatsApp Number</label>
+        <input type="tel" id="rp" placeholder="10-digit mobile number"/>
+      </div>
+      <button class="btn-big btn-primary" id="start-test-btn" style="width:100%;margin-top:14px;font-size:15px">Start Free Diagnostic →</button>
+      <p class="modal-note">Free with all plans · 15 minutes · Instant weak topic report</p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="assets/data/colleges.js"></script>
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/faq.js"></script>
+  <script src="assets/js/predictor.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>

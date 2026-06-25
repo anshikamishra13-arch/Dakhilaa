@@ -1,0 +1,150 @@
+/* ============================================================
+   responsive.css — All media queries / breakpoints
+   Breakpoints:
+     xl  : 1200px
+     lg  : 1024px
+     md  :  768px
+     sm  :  480px
+     xs  :  360px
+   ============================================================ */
+
+/* ── xl : 1200px ─────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .feat-grid     { grid-template-columns: repeat(3, 1fr); }
+  .price-grid    { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── lg : 1024px ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .feat-grid  { grid-template-columns: repeat(2, 1fr); }
+  .price-grid { grid-template-columns: repeat(2, 1fr); }
+  .testi-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .hero h1 { letter-spacing: -2px; }
+  .sec-title { letter-spacing: -1px; }
+}
+
+/* ── md : 768px ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Nav */
+  nav { padding: 0 16px; }
+
+  /* Hero */
+  .hero { padding: 100px 16px 64px; }
+  .hero h1 { letter-spacing: -1.5px; }
+  .cta-row { flex-direction: column; align-items: center; }
+  .btn-big { width: 100%; max-width: 320px; text-align: center; }
+  .proof-row { gap: 16px; }
+
+  /* Sections */
+  .sec { padding: 60px 16px; }
+  .sec-sub { margin-bottom: 36px; }
+
+  /* Steps */
+  .step { flex-direction: column; gap: 14px; }
+  .step-n { width: 38px; height: 38px; min-width: 38px; font-size: 14px; }
+
+  /* Feature grid */
+  .feat-grid { grid-template-columns: 1fr; }
+
+  /* Predictor */
+  .pred-outer  { padding: 60px 16px; }
+  .pred-card   { padding: 24px; }
+  .pred-inputs { grid-template-columns: 1fr; }
+
+  /* Testimonials */
+  .testi-grid { grid-template-columns: 1fr; }
+
+  /* Pricing */
+  .price-grid { grid-template-columns: 1fr; }
+  .pc.pop::after { font-size: 9px; }
+
+  /* Stats */
+  .stats-inner { justify-content: center; gap: 24px; }
+  .stat-n { font-size: 28px; }
+
+  /* FAQ */
+  .faq-q { font-size: 14px; }
+
+  /* Modal */
+  .modal-content { padding: 24px; }
+  .modal-title   { font-size: 22px; }
+
+  /* Footer */
+  .ft-top { grid-template-columns: 1fr 1fr; }
+
+  /* Final CTA */
+  .final-cta { padding: 60px 16px; }
+}
+
+/* ── sm : 480px ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Navbar */
+  .nbtn-ghost { display: none; }
+
+  /* Hero */
+  .hero h1        { font-size: 32px; letter-spacing: -1px; }
+  .hero-sub       { font-size: 14px; }
+  .subj-pills     { gap: 8px; }
+  .sp             { padding: 9px 14px; font-size: 12px; }
+
+  /* Proof row */
+  .proof-row      { flex-direction: column; align-items: center; gap: 10px; }
+
+  /* Section */
+  .sec-title      { letter-spacing: -.5px; }
+  .sec-eyebrow    { letter-spacing: 2px; }
+
+  /* Steps */
+  .steps          { gap: 0; }
+
+  /* Predictor branches */
+  .branch-grid    { grid-template-columns: 1fr 1fr; }
+
+  /* Footer */
+  .ft-top         { grid-template-columns: 1fr; }
+
+  /* Toast */
+  #toast          { left: 12px; right: 12px; max-width: none; }
+
+  /* Modal */
+  .modal-content  { padding: 20px; border-radius: 16px; }
+
+  /* Pricing */
+  .plan-amt       { font-size: 38px; }
+}
+
+/* ── xs : 360px ──────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .hero   { padding: 90px 12px 52px; }
+  .sec    { padding: 48px 12px; }
+  nav     { padding: 0 12px; }
+
+  .hero h1    { font-size: 28px; }
+  .btn-big    { padding: 13px 20px; font-size: 14px; }
+  .nbtn-primary { font-size: 12px; padding: 7px 12px; }
+
+  .stat-n     { font-size: 24px; }
+  .pred-card  { padding: 16px; }
+
+  .fc         { padding: 20px; }
+  .tc         { padding: 18px; }
+  .pc         { padding: 20px; }
+}
+
+/* ── Print styles ────────────────────────────────────────────── */
+@media print {
+  nav, .modal, #toast, .final-cta { display: none !important; }
+  body { background: #fff; color: #000; }
+  .hero, .sec { padding: 20px 0; }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}

@@ -29,7 +29,7 @@ app.use(
 
 // ─── Routes ──────────────────────────────────────────────────────────────────
 app.use('/api/auth',        require('./routes/auth'));
-app.use('/api/leads',       require('./backend/routes/leads'));
+app.use('/api/leads',       require('./routes/lead'));
 app.use('/api/diagnostic',  require('./routes/diagnostic'));
 app.use('/api/payment',     require('./routes/payment'));
 app.use('/api/user',        require('./routes/user'));
