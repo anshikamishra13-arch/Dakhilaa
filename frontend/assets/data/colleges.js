@@ -39,11 +39,9 @@ const COLLEGES = {
       'Aerospace Engg':   268,
     }
   },
-
-  /* ── IIT Tier 2 ──────────────────────────────────────────── */
   iitk: {
     name: 'IIT Kanpur',
-    tier: 'IIT Tier 2',
+    tier: 'IIT Tier 1',
     branches: {
       'CSE':              290,
       'Electrical Engg':  285,
@@ -54,7 +52,7 @@ const COLLEGES = {
   },
   iitr: {
     name: 'IIT Roorkee',
-    tier: 'IIT Tier 2',
+    tier: 'IIT Tier 1',
     branches: {
       'CSE':              280,
       'Electrical Engg':  275,
@@ -65,7 +63,7 @@ const COLLEGES = {
   },
   iith: {
     name: 'IIT Hyderabad',
-    tier: 'IIT Tier 2',
+    tier: 'IIT Tier 1',
     branches: {
       'CSE':              260,
       'Electrical Engg':  255,
@@ -73,11 +71,9 @@ const COLLEGES = {
       'Civil Engg':       230,
     }
   },
-
-  /* ── IIT Tier 3 ──────────────────────────────────────────── */
-  iiti: {
-    name: 'IIT Indore',
-    tier: 'IIT Tier 3',
+  iitg: {
+    name: 'IIT Guwahati',
+    tier: 'IIT Tier 1',
     branches: {
       'CSE':              250,
       'Electrical Engg':  245,
@@ -85,30 +81,20 @@ const COLLEGES = {
       'Civil Engg':       220,
     }
   },
-  iitbhu: {
+  iitbh: {
     name: 'IIT BHU',
-    tier: 'IIT Tier 3',
+    tier: 'IIT Tier 1',
     branches: {
       'CSE':              245,
       'Electrical Engg':  240,
       'Mech Engg':        225,
       'Civil Engg':       215,
     }
-  },
-  iitg: {
-    name: 'IIT Guwahati',
-    tier: 'IIT Tier 3',
-    branches: {
-      'CSE':              240,
-      'Electrical Engg':  235,
-      'Mech Engg':        220,
-      'Civil Engg':       210,
-    }
-  },
-  iitkhg: {
+  },  
+  iitkh: {
     name: 'IIT Kharagpur',
-    tier: 'IIT Tier 3',
-    branches: {
+    tier: 'IIT Tier 1',
+    branches:{ 
       'CSE':              235,
       'Electrical Engg':  230,
       'Mech Engg':        215,
@@ -116,10 +102,110 @@ const COLLEGES = {
     }
   },
 
-  /* ── NIT Tier 1 ──────────────────────────────────────────── */
-  nitt: {
-    name: 'NIT Trichy',
-    tier: 'NIT Tier 1',
+  /* ── IIT Tier 2 ──────────────────────────────────────────── */
+  iiti: {
+    name: 'IIT Indore',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              250,
+      'Electrical Engg':  245,
+      'Mech Engg':        230,
+      'Civil Engg':       220,
+    }
+  },
+  iitbhub: {
+    name: 'IIT Bhubaneswar',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              245,
+      'Electrical Engg':  240,
+      'Mech Engg':        225,
+      'Civil Engg':       215,
+    }
+  },
+  iitMandi: {
+    name: 'IIT Mandi',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              240,
+      'Electrical Engg':  235,
+      'Mech Engg':        220,
+      'Civil Engg':       210,
+    }
+  },
+  iitga: {
+    name: 'IIT Gandhinagar',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              235,
+      'Electrical Engg':  230,
+      'Mech Engg':        215,
+      'Civil Engg':       205,
+    }
+  },
+  iitpat: {
+    name: 'IIT Patna',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              230,
+      'Electrical Engg':  225,
+      'Mech Engg':        210,
+      'Civil Engg':       200,
+    }
+  },
+  iitdh: {
+    name: 'IIT Dharwad',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              225,
+      'Electrical Engg':  220,
+      'Mech Engg':        205,
+      'Civil Engg':       195,
+    }
+  },
+  iitj: {
+    name: 'IIT Jodhpur',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              220,
+      'Electrical Engg':  215,
+      'Mech Engg':        200,
+      'Civil Engg':       190,
+    }
+  },
+  iitrop: {
+    name: 'IIT Ropar',
+    tier: 'IIT Tier 2',
+    branches: {
+      'CSE':              215,
+      'Electrical Engg':  210,
+      'Mech Engg':        195,
+      'Civil Engg':       185,
+    }
+  },
+
+  /* ── IIT Tier 3 ──────────────────────────────────────────── */
+  iitp: {
+    name: 'IIT Palakkad',
+    tier: 'IIT Tier 3',
+    branches: {
+      'CSE':              210,
+      'Electrical Engg':  205,  
+    }
+  },
+  iitbhilai: {
+    name: 'IIT Bhilai',
+    tier: 'IIT Tier 3',
+    branches: {
+      'CSE':              205,
+      'Electrical Engg':  200,
+      'Mech Engg':        185,
+      'Civil Engg':       175,
+    }
+  },
+  iitjammu: {
+    name: 'IIT Jammu',
+    tier: 'IIT Tier 3',
     branches: {
       'CSE':              200,
       'Electrical Engg':  195,
@@ -128,6 +214,40 @@ const COLLEGES = {
       'Chemical Engg':    165,
     }
   },
+  iittirupati: {
+    name: 'IIT Tirupati',
+    tier: 'IIT Tier 3',
+    branches: {
+      'CSE':              200,
+      'Electrical Engg':  195,
+      'Mech Engg':        180,
+      'Civil Engg':       170,
+      'Chemical Engg':    165,
+    }
+  },
+  iitgoa: {
+    name: 'IIT Goa',
+    tier: 'IIT Tier 3',
+    branches: {
+      'CSE':              200,
+      'Electrical Engg':  195,
+      'Mech Engg':        180,
+      'Civil Engg':       170,
+      'Chemical Engg':    165,
+    }
+  },
+  iitdh:{
+    name: 'IIT Dharwad',
+    tier: 'IIT Tier 3',
+    branches: {
+      'CSE':              225,
+      'Electrical Engg':  220,
+      'Mech Engg':        205,
+      'Civil Engg':       195,
+    }
+  },
+  
+  /* ── NIT Tier 1 ──────────────────────────────────────────── */
   nitw: {
     name: 'NIT Warangal',
     tier: 'NIT Tier 1',
