@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Lead = require('../models/lead');
 const { emailTemplates, sendEmail } = require('../config/email');
+const { requireDbConnection } = require('../config/db');
+
+router.use(requireDbConnection);
 
 // POST /api/leads/diagnostic-signup  — landing page form (no login required)
 router.post('/diagnostic-signup', async (req, res) => {

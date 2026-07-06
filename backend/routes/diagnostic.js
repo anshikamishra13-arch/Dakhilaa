@@ -4,6 +4,9 @@ const Diagnostic = require('../models/Diagnostic');
 const User = require('../models/User');
 const { emailTemplates, sendEmail } = require('../config/email');
 const { auth } = require('../middleware/auth');
+const { requireDbConnection } = require('../config/db');
+
+router.use(requireDbConnection);
 
 // POST /api/diagnostic/save-results  — save test results (requires login)
 router.post('/save-results', auth, async (req, res) => {

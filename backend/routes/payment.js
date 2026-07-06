@@ -6,11 +6,16 @@ const Payment = require('../models/Payment');
 const User = require('../models/User');
 const { emailTemplates, sendEmail } = require('../config/email');
 const { auth } = require('../middleware/auth');
+const { requireDbConnection } = require('../config/db');
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+router.use(requireDbConnection);
+
+const razorpay = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
+  ? new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    })
+  : null;
 
 // Plan definitions (amounts in paise)
 const PLANS = {
@@ -31,6 +36,12 @@ router.post('/create-order', auth, async (req, res) => {
     }
 
     const plan = PLANS[planType];
+
+    if (!razorpay) {
+      return res.status(503).json({
+        error: 'Razorpay is not configured. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to enable payments.',
+      });
+    }
 
     const order = await razorpay.orders.create({
       amount: plan.price,

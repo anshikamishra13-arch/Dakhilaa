@@ -1,21 +1,27 @@
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE || 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+const transporter = process.env.EMAIL_USER && process.env.EMAIL_PASSWORD
+  ? nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE || 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    })
+  : null;
 
-// Verify connection on startup
-transporter.verify((error) => {
-  if (error) {
-    console.error('❌ Email config error:', error.message);
-  } else {
-    console.log('✅ Email server ready');
-  }
-});
+// Verify connection on startup only if email credentials are configured
+if (transporter) {
+  transporter.verify((error) => {
+    if (error) {
+      console.error('❌ Email config error:', error.message);
+    } else {
+      console.log('✅ Email server ready');
+    }
+  });
+} else {
+  console.warn('⚠️ Email credentials not set. Email sending is disabled until EMAIL_USER and EMAIL_PASSWORD are configured.');
+}
 
 const emailTemplates = {
   diagnosticWelcome: (name) => ({
@@ -103,6 +109,10 @@ const emailTemplates = {
  * @param {object} template - { subject, html }
  */
 async function sendEmail(to, template) {
+  if (!transporter) {
+    return;
+  }
+
   try {
     await transporter.sendMail({
       from: `"Dakhilaa" <${process.env.EMAIL_USER}>`,

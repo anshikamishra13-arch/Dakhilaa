@@ -1,0 +1,17 @@
+{
+  "name": "dakhilaa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dakhilaa monorepo for backend and frontend",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "start": "npm run start:backend",
+    "build": "echo \"No build step configured yet.\"",
+    "start:backend": "npm --workspace backend start",
+    "start:frontend": "npm --workspace frontend start"
+  }
+}

@@ -3,6 +3,9 @@ const router = express.Router();
 const User = require('../models/User');
 const { auth, requirePaidPlan } = require('../middleware/auth');
 const { generateDailyQuestions } = require('../utils/helpers');
+const { requireDbConnection } = require('../config/db');
+
+router.use(requireDbConnection);
 
 // GET /api/user/profile
 router.get('/profile', auth, async (req, res) => {

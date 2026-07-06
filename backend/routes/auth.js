@@ -3,6 +3,9 @@ const router = express.Router();
 const User = require('../models/User');
 const { emailTemplates, sendEmail } = require('../config/email');
 const { auth } = require('../middleware/auth');
+const { requireDbConnection } = require('../config/db');
+
+router.use(requireDbConnection);
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
