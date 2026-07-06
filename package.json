@@ -14,5 +14,8 @@
     "build": "echo \"No build step configured yet.\"",
     "start:backend": "npm --workspace backend start",
     "start:frontend": "npm --workspace frontend start"
+  },
+  "dependencies": {
+    "cors": "^2.8.6"
   }
 }
