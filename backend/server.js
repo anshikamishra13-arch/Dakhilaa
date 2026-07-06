@@ -25,13 +25,39 @@ function createApp() {
   // ─── Middleware ────────────────────────────────────────────────────────────
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    process.env.CLIENT_URL,
+    process.env.FRONTEND_URL,
+    process.env.VITE_API_URL,
+  ].filter(Boolean);
+
   app.use(
     cors({
-      origin: process.env.CLIENT_URL || '*',
-      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+      origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+          return;
+        }
+
+        callback(null, false);
+      },
+      credentials: true,
+      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     })
   );
+
+  app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      res.sendStatus(204);
+      return;
+    }
+    next();
+  });
 
   // ─── Routes ─────────────────────────────────────────────────────────────
   app.use('/api/auth', require('./routes/auth'));

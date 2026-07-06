@@ -5,6 +5,12 @@
 (function () {
   'use strict';
 
+  var API_BASE_URL = window.__DakhilaaApiUrl || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '');
+
+  function apiUrl(path) {
+    return API_BASE_URL ? API_BASE_URL + path : path;
+  }
+
   /* ── Pricing plan buttons ─────────────────────────────────── */
   function initPricingButtons() {
     var btns = document.querySelectorAll('.btn-plan[data-plan]');
