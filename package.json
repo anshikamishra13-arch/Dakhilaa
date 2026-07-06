@@ -10,6 +10,7 @@
   "scripts": {
     "install:all": "npm install",
     "start": "npm run start:backend",
+    "dev": "npm --workspace backend run dev",
     "build": "echo \"No build step configured yet.\"",
     "start:backend": "npm --workspace backend start",
     "start:frontend": "npm --workspace frontend start"

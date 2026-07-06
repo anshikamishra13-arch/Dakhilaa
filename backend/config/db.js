@@ -16,7 +16,6 @@ const connectDB = async () => {
   const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI || process.env.MONGODB_URL;
 
   if (!mongoUri) {
-    console.warn('⚠️ MongoDB URI not set. Skipping database connection. Set MONGO_URI or MONGODB_URI to enable database-backed features.');
     return;
   }
 
@@ -26,8 +25,7 @@ const connectDB = async () => {
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (err) {
-    console.error('❌ MongoDB connection error:', err.message);
-    console.warn('⚠️ Continuing without MongoDB. Some features may be unavailable until the database is configured.');
+    console.warn('⚠️ MongoDB connection failed. Continuing without DB features.');
   }
 };
 

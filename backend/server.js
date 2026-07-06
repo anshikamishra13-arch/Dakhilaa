@@ -4,11 +4,16 @@
  */
 
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from the monorepo root first,
+// then fall back to the backend folder for compatibility.
+const rootEnvPath = path.resolve(__dirname, '..', '.env');
+const backendEnvPath = path.resolve(__dirname, '.env');
+dotenv.config({ path: rootEnvPath });
+dotenv.config({ path: backendEnvPath });
 
 // Database connection
 const { connectDB } = require('./config/db');
@@ -80,7 +85,6 @@ function startServer(port = Number(process.env.PORT) || 5000) {
       server.once('error', (error) => {
         if (error.code === 'EADDRINUSE' && currentPort !== 0 && attempts < 10) {
           const nextPort = currentPort + 1;
-          console.warn(`⚠️ Port ${currentPort} is busy. Trying ${nextPort} instead...`);
           tryListen(nextPort, attempts + 1);
           return;
         }

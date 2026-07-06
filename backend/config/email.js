@@ -14,13 +14,9 @@ const transporter = process.env.EMAIL_USER && process.env.EMAIL_PASSWORD
 if (transporter) {
   transporter.verify((error) => {
     if (error) {
-      console.error('❌ Email config error:', error.message);
-    } else {
-      console.log('✅ Email server ready');
+      console.warn('⚠️ Email is not configured correctly. Email sending will be skipped.');
     }
   });
-} else {
-  console.warn('⚠️ Email credentials not set. Email sending is disabled until EMAIL_USER and EMAIL_PASSWORD are configured.');
 }
 
 const emailTemplates = {
