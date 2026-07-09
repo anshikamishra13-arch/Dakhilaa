@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+  <!-- Theme init — must run before CSS loads, prevents flash of wrong theme -->
   <script>
-  (function() {
-    var t = localStorage.getItem('dakhilaa-theme');
-    if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
-  })();
-</script>
+    (function() {
+      var t = localStorage.getItem('dakhilaa-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    })();
+  </script>
+
   <meta name="description" content="Dakhilaa — Find your weakest JEE topics in 15 minutes. Precision diagnostics, college predictor, and targeted daily practice."/>
   <meta name="keywords" content="JEE prep, JEE diagnostic, IIT college predictor, weak topics, JEE Mains, JEE Advanced"/>
   <meta property="og:title" content="Dakhilaa — Find Your Weakest JEE Topics"/>
@@ -36,12 +39,8 @@
     </div>
     <div class="nav-right">
       <button class="nbtn nbtn-ghost" onclick="scrollToSection('pricing')">Pricing</button>
-      <button class="nbtn nbtn-primary" onclick="openModal()">Get Started</button>
-    </div>
-    <div class="nav-right">
-      <button class="nbtn nbtn-ghost" onclick="scrollToSection('pricing')">Pricing</button>
       <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme">
-        <span class="knob">☀️</span>
+        <span class="knob" id="theme-toggle-icon">🌙</span>
       </button>
       <button class="nbtn nbtn-primary" onclick="openModal()">Get Started</button>
     </div>
@@ -151,8 +150,6 @@
                 <option value="iitb">IIT Bombay</option>
                 <option value="iitd">IIT Delhi</option>
                 <option value="iitm">IIT Madras</option>
-                <option value="iitr">IIT Roorkee</option>
-                <option value="iitkhg">IIT Kharagpur</option>
               </optgroup>
               <optgroup label="IIT Tier 2">
                 <option value="iitk">IIT Kanpur</option>
@@ -369,4 +366,4 @@
   <script src="assets/js/predictor.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/theme.js"></script>
-</body>
+</body></html>
