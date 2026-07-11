@@ -404,3 +404,50 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,.4); }
 }
 .input-group input:focus { border-color: var(--orange); }
 .input-group input.err  { border-color: var(--red); }
+/* ── Sample Questions (landing page proof section) ──────────────── */
+.sample-q-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 32px auto 0;
+}
+.sample-q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+}
+.sample-q-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+.sample-q-text {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.sample-q-opts { display: flex; flex-direction: column; gap: 8px; }
+.sample-q-opt {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--light);
+}
+.sample-q-opt.correct {
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 600;
+  background: rgba(5,150,105,.08);
+}
+
+@media (max-width: 768px) {
+  .sample-q-grid { grid-template-columns: 1fr; }
+}

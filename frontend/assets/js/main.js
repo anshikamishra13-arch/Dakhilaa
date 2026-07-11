@@ -1,6 +1,14 @@
 (function () {
   'use strict';
 
+  // Start the diagnostic immediately, no name/phone gate.
+  // We only ask for contact details later, on the results page,
+  // once the student has already gotten value from the test.
+  function startDiagnostic() {
+    window.location.href = 'pages/diagnostic.html';
+  }
+  window.startDiagnostic = startDiagnostic;
+
   function initPricingButtons() {
     var btns = document.querySelectorAll('.btn-plan[data-plan]');
     btns.forEach(function (btn) {

@@ -48,7 +48,7 @@
       '<strong style="color:var(--orange)">Your strategy:</strong> ' +
       'You need <strong>' + minGap + ' more marks</strong> to unlock your next branch at ' + college.name + '. ' +
       'Fixing 2–3 weak topics typically adds 20–40 marks in 3–4 weeks. ' +
-      '<a href="#" onclick="window.openModal();return false;" style="color:var(--orange);text-decoration:underline">Take the diagnostic →</a>'
+      '<a href="#" onclick="window.startDiagnostic();return false;" style="color:var(--orange);text-decoration:underline">Take the diagnostic →</a>'
     );
   }
 

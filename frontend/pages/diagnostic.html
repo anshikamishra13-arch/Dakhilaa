@@ -114,9 +114,33 @@
       { subject:'Maths', topic:'3D Geometry', text:'The direction cosines of the x-axis are:', opts:['(0,0,0)','(1,0,0)','(0,1,0)','(1,1,1)'], ans:1 },
     ];
 
-    var current = 0;
-    var answers = new Array(questions.length).fill(null);
     var TOTAL = questions.length;
+    var STORAGE_KEY = 'diag_progress_v1';
+
+    var current = 0;
+    var answers = new Array(TOTAL).fill(null);
+
+    // Resume an interrupted attempt (refresh, accidental back button, closed tab)
+    // instead of silently discarding the student's progress.
+    (function restoreProgress() {
+      try {
+        var saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+        if (saved && Array.isArray(saved.answers) && saved.answers.length === TOTAL) {
+          answers = saved.answers;
+          current = Math.min(saved.current || 0, TOTAL - 1);
+          var answeredCount = answers.filter(function (a) { return a !== null; }).length;
+          if (answeredCount > 0 && window.showToast) {
+            showToast('Resumed your previous attempt — ' + answeredCount + ' answered.', 'success');
+          }
+        }
+      } catch (e) { /* corrupted/old data — start fresh */ }
+    }());
+
+    function saveProgress() {
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ current: current, answers: answers }));
+      } catch (e) { /* storage unavailable — non-fatal, just won't resume */ }
+    }
 
     var metaEl   = document.getElementById('q-meta');
     var textEl   = document.getElementById('q-text');
@@ -163,6 +187,7 @@
         btn.innerHTML = '<span class="opt-label">' + labels[i] + '</span>' + opt;
         btn.addEventListener('click', function () {
           answers[current] = i;
+          saveProgress();
           renderQuestion();
         });
         optsEl.appendChild(btn);
@@ -186,6 +211,7 @@
       }
       if (current < TOTAL - 1) {
         current++;
+        saveProgress();
         renderQuestion();
       } else {
         submitTest();
@@ -193,7 +219,7 @@
     }
 
     function goPrev() {
-      if (current > 0) { current--; renderQuestion(); }
+      if (current > 0) { current--; saveProgress(); renderQuestion(); }
     }
 
     function submitTest() {
@@ -212,6 +238,7 @@
       sessionStorage.setItem('diag_total', JSON.stringify(TOTAL));
       sessionStorage.setItem('diag_topics', JSON.stringify(topicMap));
       sessionStorage.setItem('diag_name', params.get('name') || 'Student');
+      sessionStorage.removeItem(STORAGE_KEY);
 
       if (window.showToast) showToast('Test complete! Loading your results…', 'success');
       setTimeout(function () {
@@ -221,7 +248,16 @@
 
     nextBtn.addEventListener('click', goNext);
     prevBtn.addEventListener('click', goPrev);
-    renderQuestion();
+
+    try {
+      if (!questions || !questions.length) throw new Error('No questions available');
+      renderQuestion();
+    } catch (e) {
+      textEl.textContent = 'We couldn\u2019t load your questions. Please refresh the page — your progress is saved.';
+      optsEl.innerHTML = '';
+      nextBtn.style.display = 'none';
+      if (window.showToast) showToast('Something went wrong loading the test.', 'error');
+    }
   }());
   </script>
 </body>

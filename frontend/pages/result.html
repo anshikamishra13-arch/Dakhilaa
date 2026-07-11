@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dakhilaa — Your Diagnostic Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
+  <link rel="stylesheet" href="../assets/css/theme.css"/>
+  <style>
+    .res-wrap { min-height: 100vh; padding: 90px 24px 60px; max-width: 760px; margin: 0 auto; }
+    .res-header { text-align: center; margin-bottom: 36px; }
+    .res-header h1 { font-family: var(--fh); font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 8px; }
+    .res-header p { font-size: 14px; color: var(--light); }
+
+    .score-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; display: flex; gap: 28px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
+    .score-ring { width: 96px; height: 96px; border-radius: 50%; background: conic-gradient(var(--orange) calc(var(--pct) * 1%), var(--bg2) 0); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .score-ring-inner { width: 76px; height: 76px; border-radius: 50%; background: var(--card); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .score-ring-inner b { font-family: var(--fh); font-size: 18px; }
+    .score-ring-inner span { font-size: 10px; color: var(--muted); }
+    .score-meta h2 { font-size: 18px; margin-bottom: 6px; }
+    .score-meta p { font-size: 13px; color: var(--light); line-height: 1.6; }
+
+    .subj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+    .subj-box { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center; }
+    .subj-box .n { font-family: var(--fh); font-size: 20px; font-weight: 800; }
+    .subj-box .l { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .report-section { position: relative; }
+    .report-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+    .topic-row { display: flex; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; }
+    .topic-row .tname { font-size: 14px; font-weight: 600; }
+    .topic-row .tsub { font-size: 11px; color: var(--muted); }
+    .topic-row .tpct { font-family: var(--fh); font-weight: 800; color: var(--red); }
+
+    .gated { filter: blur(7px); pointer-events: none; user-select: none; }
+
+    .gate-overlay {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(180deg, transparent, var(--bg) 40%);
+    }
+    .gate-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 26px; max-width: 380px; width: 100%; box-shadow: var(--shadow-md); }
+    .gate-card h3 { font-size: 16px; margin-bottom: 6px; }
+    .gate-card p.sub { font-size: 13px; color: var(--light); margin-bottom: 16px; line-height: 1.6; }
+    .privacy-note { font-size: 11px; color: var(--muted); margin-top: 10px; line-height: 1.5; text-align: center; }
+    .privacy-note a { color: var(--orange); text-decoration: none; }
+    .privacy-note a:hover { text-decoration: underline; }
+
+    .cta-final { text-align: center; margin-top: 36px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location.href='../index.html'">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+  </nav>
+
+  <div class="res-wrap">
+    <div class="res-header">
+      <div class="hero-badge">✅ Diagnostic Complete</div>
+      <h1 id="res-title">Your Weak Topic Report</h1>
+      <p id="res-sub">Here's exactly where you're losing marks.</p>
+    </div>
+
+    <!-- No-results fallback (shown only if the diagnostic hasn't been completed) -->
+    <div class="score-card" id="empty-state" style="display:none;justify-content:center;text-align:center;flex-direction:column;gap:14px">
+      <div style="font-size:28px">🧭</div>
+      <h2 style="font-size:16px">No report yet</h2>
+      <p style="font-size:13px;color:var(--light);max-width:420px">
+        We couldn't find a completed diagnostic on this device. Take the 15-minute test first — your report will land here automatically right after.
+      </p>
+      <button class="btn-big btn-primary" onclick="window.location.href='diagnostic.html'">Take the Diagnostic →</button>
+    </div>
+
+    <div id="report-body">
+    <!-- Free summary — visible immediately, no signup required -->
+    <div class="score-card">
+      <div class="score-ring" id="score-ring" style="--pct:0">
+        <div class="score-ring-inner"><b id="score-pct">0%</b><span>Score</span></div>
+      </div>
+      <div class="score-meta">
+        <h2 id="score-line">0 / 0 correct</h2>
+        <p id="readiness-line">Calculating your JEE readiness…</p>
+      </div>
+    </div>
+
+    <div class="subj-grid" id="subj-grid"></div>
+
+    <!-- Gated detailed report -->
+    <div class="report-section">
+      <div class="report-title">📉 Your Weakest Topics (full breakdown)</div>
+      <div id="topic-list" class="gated"></div>
+
+      <div class="gate-overlay" id="gate-overlay">
+        <div class="gate-card">
+          <h3>Unlock your full weak-topic report</h3>
+          <p class="sub">See every topic ranked by accuracy, your JEE readiness score, and a free daily practice set — sent straight to your WhatsApp.</p>
+
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="rn" placeholder="Your full name"/>
+          </div>
+          <div class="input-group">
+            <label>WhatsApp Number</label>
+            <input type="tel" id="rp" placeholder="10-digit mobile number"/>
+          </div>
+          <button class="btn-big btn-primary" id="unlock-btn" style="width:100%;font-size:14px">Unlock My Report →</button>
+
+          <p class="privacy-note">
+            We'll only use this number to send your report and study reminders on WhatsApp —
+            never spam, never shared with third parties. <a href="../index.html#faq">Privacy details</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-final" id="cta-final" style="display:none">
+      <button class="btn-big btn-ghost" onclick="window.location.href='../index.html#pricing'">See Prep Plans →</button>
+    </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/toast.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    var params = new URLSearchParams(window.location.search);
+    var isDemo = params.get('demo') === '1';
+
+    var DEMO_TOPICS = {
+      'Kinematics': { correct: 1, total: 1 }, 'Laws of Motion': { correct: 1, total: 1 },
+      'Thermodynamics': { correct: 0, total: 1 }, 'Waves': { correct: 0, total: 1 },
+      'Mole Concept': { correct: 1, total: 1 }, 'Equilibrium': { correct: 0, total: 1 },
+      'Organic Chemistry': { correct: 1, total: 1 }, 'Limits': { correct: 1, total: 1 },
+      'Integration': { correct: 0, total: 1 }, 'Probability': { correct: 0, total: 1 }
+    };
+
+    var hasRealResult = !!sessionStorage.getItem('diag_score');
+
+    var score  = isDemo ? 18 : JSON.parse(sessionStorage.getItem('diag_score')  || '0');
+    var total  = isDemo ? 30 : JSON.parse(sessionStorage.getItem('diag_total')  || '30');
+    var topics = isDemo ? DEMO_TOPICS : JSON.parse(sessionStorage.getItem('diag_topics') || '{}');
+    var name   = isDemo ? 'Demo Student' : (sessionStorage.getItem('diag_name') || 'Student');
+
+    // No completed diagnostic and not previewing in demo mode — show a friendly
+    // empty state with a way forward, instead of redirecting to a page that may
+    // not resolve depending on how this file was opened.
+    if (!hasRealResult && !isDemo) {
+      document.getElementById('report-body').style.display = 'none';
+      document.getElementById('empty-state').style.display = 'flex';
+      return;
+    }
+
+    var pct = total ? Math.round((score / total) * 100) : 0;
+    document.getElementById('res-title').textContent = name + ', here\u2019s your report';
+    document.getElementById('score-pct').textContent = pct + '%';
+    document.getElementById('score-ring').style.setProperty('--pct', pct);
+    document.getElementById('score-line').textContent = score + ' / ' + total + ' correct';
+
+    var readiness = pct >= 75 ? 'Strong — you\u2019re on track for top colleges.' :
+                    pct >= 50 ? 'Moderate — a few focused fixes will move the needle fast.' :
+                    'Early stage — plenty of room to close the gap with targeted practice.';
+    document.getElementById('readiness-line').textContent = 'JEE readiness: ' + readiness;
+
+    // Subject-wise free summary (grouped from topic map — always visible)
+    var subjTopics = { Physics: [], Chemistry: [], Maths: [] };
+    var subjMeta = {
+      'Kinematics':'Physics','Laws of Motion':'Physics','Work & Energy':'Physics','Gravitation':'Physics','Thermodynamics':'Physics','Waves':'Physics','Electrostatics':'Physics','Current Electricity':'Physics','Optics':'Physics','Modern Physics':'Physics',
+      'Mole Concept':'Chemistry','Periodic Table':'Chemistry','Chemical Bonding':'Chemistry','Thermochemistry':'Chemistry','Equilibrium':'Chemistry','Organic Chemistry':'Chemistry','Electrochemistry':'Chemistry','Coordination':'Chemistry','p-Block Elements':'Chemistry','Reaction Kinetics':'Chemistry',
+      'Quadratic Equations':'Maths','Trigonometry':'Maths','Sequences & Series':'Maths','Limits':'Maths','Differentiation':'Maths','Integration':'Maths','Matrices':'Maths','Probability':'Maths','Coordinate Geometry':'Maths','3D Geometry':'Maths'
+    };
+
+    var subjTotals = { Physics: {c:0,t:0}, Chemistry: {c:0,t:0}, Maths: {c:0,t:0} };
+    Object.keys(topics).forEach(function (topic) {
+      var subj = subjMeta[topic] || 'Physics';
+      subjTotals[subj].c += topics[topic].correct;
+      subjTotals[subj].t += topics[topic].total;
+    });
+
+    var grid = document.getElementById('subj-grid');
+    ['Physics','Chemistry','Maths'].forEach(function (s) {
+      var d = subjTotals[s];
+      var p = d.t ? Math.round((d.c / d.t) * 100) : 0;
+      var box = document.createElement('div');
+      box.className = 'subj-box';
+      box.innerHTML = '<div class="n">' + p + '%</div><div class="l">' + s + '</div>';
+      grid.appendChild(box);
+    });
+
+    // Full ranked topic list — this part stays blurred until the gate is unlocked
+    var ranked = Object.keys(topics).map(function (t) {
+      var d = topics[t];
+      return { topic: t, subject: subjMeta[t] || '', pct: d.total ? Math.round((d.correct / d.total) * 100) : 0 };
+    }).sort(function (a, b) { return a.pct - b.pct; });
+
+    var listEl = document.getElementById('topic-list');
+    ranked.forEach(function (r) {
+      var row = document.createElement('div');
+      row.className = 'topic-row';
+      row.innerHTML =
+        '<div><div class="tname">' + r.topic + '</div><div class="tsub">' + r.subject + '</div></div>' +
+        '<div class="tpct">' + r.pct + '%</div>';
+      listEl.appendChild(row);
+    });
+
+    // Unlock flow — collects name/phone only NOW, after value has been shown
+    function validateName(val)  { return val.trim().length >= 2; }
+    function validatePhone(val) { return /^[6-9]\d{9}$/.test(val.trim()); }
+
+    function unlockReport() {
+      var nameInput  = document.getElementById('rn');
+      var phoneInput = document.getElementById('rp');
+      var ok = true;
+
+      if (!validateName(nameInput.value))  { nameInput.classList.add('err');  ok = false; }
+      if (!validatePhone(phoneInput.value)) { phoneInput.classList.add('err'); ok = false; }
+      if (!ok) {
+        if (window.showToast) showToast('Please fix the highlighted fields.', 'error');
+        return;
+      }
+
+      var payload = {
+        name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        currentScore: pct,
+        signupSource: 'results-page',
+      };
+
+      fetch(window.DAKHILAA_API_BASE + '/leads/diagnostic-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+        .catch(function () { /* non-blocking — still unlock locally even if the API call fails */ })
+        .finally(function () {
+          document.getElementById('topic-list').classList.remove('gated');
+          document.getElementById('gate-overlay').remove();
+          document.getElementById('cta-final').style.display = 'block';
+          localStorage.setItem('dakhilaa_lead_captured', '1');
+          if (window.showToast) showToast('Report unlocked! Sent a copy to your WhatsApp. 🎯', 'success');
+        });
+    }
+
+    document.getElementById('unlock-btn').addEventListener('click', unlockReport);
+    document.getElementById('rn').addEventListener('input', function () { this.classList.remove('err'); });
+    document.getElementById('rp').addEventListener('input', function () { this.classList.remove('err'); });
+
+    // Returning student who already unlocked a report this device — skip the gate.
+    if (localStorage.getItem('dakhilaa_lead_captured') === '1') {
+      document.getElementById('topic-list').classList.remove('gated');
+      var overlay = document.getElementById('gate-overlay');
+      if (overlay) overlay.remove();
+      document.getElementById('cta-final').style.display = 'block';
+    }
+  }());
+  </script>
+</body>
+</html>

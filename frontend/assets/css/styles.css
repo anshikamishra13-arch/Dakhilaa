@@ -151,6 +151,14 @@ strong { font-weight: 600; }
   flex-wrap: wrap;
   gap: 20px;
 }
+.stats-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 16px;
+}
+.stats-note a { color: var(--orange); text-decoration: none; }
+.stats-note a:hover { text-decoration: underline; }
 .stat { text-align: center; }
 .stat-n {
   font-family: var(--fh);

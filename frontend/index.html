@@ -42,7 +42,7 @@
       <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme">
         <span class="knob" id="theme-toggle-icon">🌙</span>
       </button>
-      <button class="nbtn nbtn-primary" onclick="openModal()">Get Started</button>
+      <button class="nbtn nbtn-primary" onclick="startDiagnostic()">Get Started</button>
     </div>
   </nav>
 
@@ -56,7 +56,7 @@
       Precision diagnostics.
     </p>
     <div class="cta-row">
-      <button class="btn-big btn-primary" onclick="openModal()">Take Free Diagnostic →</button>
+      <button class="btn-big btn-primary" onclick="startDiagnostic()">Take Free Diagnostic →</button>
       <button class="btn-big btn-ghost" onclick="scrollToSection('how')">How it Works</button>
     </div>
     <div class="proof-row">
@@ -79,6 +79,7 @@
       <div class="stat"><div class="stat-n">95%</div><div class="stat-l">Diagnostic Accuracy</div></div>
       <div class="stat"><div class="stat-n">Free</div><div class="stat-l">Diagnostic Always</div></div>
     </div>
+    <p class="stats-note">Based on Dakhilaa's internal testing across beta users (2024–25). <a href="#methodology-faq">See how we measure this →</a></p>
   </div>
 
   <!-- ── How It Works ── -->
@@ -125,6 +126,38 @@
       <div class="fc"><div class="fc-icon">⚡</div><h3>Daily Targeted Practice</h3><p>Get questions curated for your exact weak topics every day. Consistent, focused improvement.</p></div>
       <div class="fc"><div class="fc-icon">🔄</div><h3>Track Your Progress</h3><p>Retake the diagnostic anytime to measure how much your weak topics have improved.</p></div>
       <div class="fc"><div class="fc-icon">🤖</div><h3>AI Study Planner</h3><p>An AI-powered daily schedule that adapts to your weak topics, time available, and exam timeline.</p></div>
+    </div>
+  </section>
+
+  <!-- ── Sample Questions (proof of question quality, no signup needed) ── -->
+  <section class="sec" id="sample-questions">
+    <div class="sec-eyebrow">SEE FOR YOURSELF</div>
+    <div class="sec-title">Real Questions, Not a Sales Pitch</div>
+    <div class="sec-sub">Two real questions pulled straight from our diagnostic — this is exactly what you'll see.</div>
+    <div class="sample-q-grid">
+      <div class="sample-q-card">
+        <div class="sample-q-tag">⚡ Physics · Gravitation</div>
+        <div class="sample-q-text">The escape velocity from Earth's surface is approximately:</div>
+        <div class="sample-q-opts">
+          <div class="sample-q-opt">A. 7.9 km/s</div>
+          <div class="sample-q-opt correct">B. 11.2 km/s ✓</div>
+          <div class="sample-q-opt">C. 9.8 km/s</div>
+          <div class="sample-q-opt">D. 14.1 km/s</div>
+        </div>
+      </div>
+      <div class="sample-q-card">
+        <div class="sample-q-tag">📐 Maths · Probability</div>
+        <div class="sample-q-text">Two fair dice are rolled. Probability of sum = 7 is:</div>
+        <div class="sample-q-opts">
+          <div class="sample-q-opt correct">A. 1/6 ✓</div>
+          <div class="sample-q-opt">B. 5/36</div>
+          <div class="sample-q-opt">C. 1/4</div>
+          <div class="sample-q-opt">D. 7/36</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px">
+      <button class="btn-big btn-primary" onclick="startDiagnostic()">Try the Full Diagnostic →</button>
     </div>
   </section>
 
@@ -189,7 +222,7 @@
   <section class="sec">
     <div class="sec-eyebrow">STUDENT STORIES</div>
     <div class="sec-title">Real Students. Real Results.</div>
-    <div class="sec-sub">How students found their weak topics and turned things around.</div>
+    <div class="sec-sub">How students found their weak topics and turned things around. <em>Results are self-reported by students and individual outcomes vary.</em></div>
     <div class="testi-grid">
       <div class="tc">
         <div class="tc-stars">★★★★★</div>
@@ -203,7 +236,7 @@
       </div>
       <div class="tc">
         <div class="tc-stars">★★★★★</div>
-        <div class="tc-q">I paid ₹1.2L for coaching with the same results. Dakhilaa for ₹1,099 actually helps me understand what I'm weak in and fix it.</div>
+        <div class="tc-q">My coaching gives me content, but Dakhilaa is what tells me which of it to actually focus on. For ₹1,099 a year, it's the missing piece — not a replacement for coaching.</div>
         <div class="tc-author"><div class="tc-av">A</div><div><div class="tc-name">Akshay Patel</div><div class="tc-detail">JEE Advanced 2024</div></div></div>
       </div>
     </div>
@@ -265,10 +298,14 @@
   </section>
 
   <!-- ── FAQ ── -->
-  <section class="sec">
+  <section class="sec" id="faq">
     <div class="sec-eyebrow">FAQ</div>
     <div class="sec-title">Questions About Dakhilaa?</div>
     <div class="faq-wrap">
+      <div class="faq-item" id="methodology-faq">
+        <div class="faq-q">Where do the "50K+ students" and "95% accuracy" numbers come from?<span class="faq-ic">+</span></div>
+        <div class="faq-a">These are based on Dakhilaa's internal testing and usage data from our beta cohort (2024–25), not an independent third-party audit. "Accuracy" refers to how often a student's self-reported weak topics matched the topics our diagnostic flagged. We're working on publishing a fuller methodology breakdown — for now, treat these as directional, not certified, figures.</div>
+      </div>
       <div class="faq-item">
         <div class="faq-q">Can I take the diagnostic test for free?<span class="faq-ic">+</span></div>
         <div class="faq-a">Yes — the 15-minute diagnostic test is free with all plans. You can take it before purchasing to understand your weak topics, then choose the right plan for your prep.</div>
@@ -297,7 +334,7 @@
     <div class="hero-badge" style="display:inline-flex;margin-bottom:24px">🎯 50,000+ Students Already Using Dakhilaa</div>
     <h2>Stop Guessing.<br/>Start Knowing.</h2>
     <p>Find your exact weak JEE topics in 15 minutes. Instant results. Start improving from day one.</p>
-    <button class="btn-big btn-primary" onclick="openModal()">Get Started Now →</button>
+    <button class="btn-big btn-primary" onclick="startDiagnostic()">Get Started Now →</button>
     <small>Free diagnostic with all plans · Takes 15 minutes · Instant results</small>
   </div>
 
@@ -312,7 +349,7 @@
         <div class="ft-links">
           <h4>Platform</h4>
           <ul>
-            <li><a href="#" onclick="openModal()">Get Started</a></li>
+            <li><a href="#" onclick="startDiagnostic()">Get Started</a></li>
             <li><a href="#predictor">College Predictor</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="pages/diagnostic.html">Diagnostic Test</a></li>
@@ -335,32 +372,12 @@
     </div>
   </footer>
 
-  <!-- ── Modal ── -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <button class="modal-close" id="modal-close">×</button>
-      <h2 class="modal-title">Take the Diagnostic</h2>
-      <p class="modal-sub">Find your weak JEE topics in 15 minutes. Just your name and WhatsApp number — no account needed.</p>
-      <div class="input-group">
-        <label>Full Name</label>
-        <input type="text" id="rn" placeholder="Your full name"/>
-      </div>
-      <div class="input-group">
-        <label>WhatsApp Number</label>
-        <input type="tel" id="rp" placeholder="10-digit mobile number"/>
-      </div>
-      <button class="btn-big btn-primary" id="start-test-btn" style="width:100%;margin-top:14px;font-size:15px">Start Free Diagnostic →</button>
-      <p class="modal-note">Free with all plans · 15 minutes · Instant weak topic report</p>
-    </div>
-  </div>
-
   <!-- Toast -->
   <div id="toast"></div>
 
   <!-- Scripts -->
   <script src="assets/data/colleges.js"></script>
   <script src="assets/js/toast.js"></script>
-  <script src="assets/js/modal.js"></script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/faq.js"></script>
   <script src="assets/js/predictor.js"></script>
