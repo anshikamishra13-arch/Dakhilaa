@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dakhilaa — Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
+  <link rel="stylesheet" href="../assets/css/theme.css"/>
+  <style>
+    .co-wrap { min-height: 100vh; padding: 90px 24px 60px; max-width: 480px; margin: 0 auto; }
+    .co-header { text-align: center; margin-bottom: 28px; }
+    .co-header h1 { font-family: var(--fh); font-size: clamp(22px, 4vw, 30px); font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+    .co-header p { font-size: 13px; color: var(--light); }
+
+    .plan-summary { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 22px; display: flex; justify-content: space-between; align-items: center; }
+    .plan-summary .pname { font-size: 15px; font-weight: 700; }
+    .plan-summary .pfeat { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .plan-summary .pamt { font-family: var(--fh); font-size: 24px; font-weight: 800; color: var(--orange); }
+
+    .co-form { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 24px; }
+    .toggle-row { display: flex; gap: 8px; margin-bottom: 18px; }
+    .toggle-btn { flex: 1; padding: 9px; border-radius: 9px; border: 1.5px solid var(--border); background: var(--bg2); color: var(--light); font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; }
+    .toggle-btn.active { border-color: var(--orange); color: var(--orange); background: rgba(255,107,53,.08); }
+
+    .co-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 14px; line-height: 1.6; }
+    .fallback-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 26px; text-align: center; }
+    .fallback-box .ic { font-size: 30px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location.href='../index.html'">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+  </nav>
+
+  <div class="co-wrap">
+    <div class="co-header">
+      <div class="hero-badge">🔒 Secure Checkout</div>
+      <h1 id="co-title">Complete Your Plan</h1>
+      <p>One step away from your full prep plan.</p>
+    </div>
+
+    <div class="plan-summary" id="plan-summary">
+      <div>
+        <div class="pname" id="plan-name">—</div>
+        <div class="pfeat" id="plan-feat">—</div>
+      </div>
+      <div class="pamt" id="plan-amt">—</div>
+    </div>
+
+    <div class="co-form" id="co-form">
+      <div class="toggle-row">
+        <div class="toggle-btn active" id="toggle-signup">New here — Create account</div>
+        <div class="toggle-btn" id="toggle-login">Already registered — Log in</div>
+      </div>
+
+      <div class="input-group" id="field-name">
+        <label>Full Name</label>
+        <input type="text" id="cn" placeholder="Your full name"/>
+      </div>
+      <div class="input-group" id="field-phone">
+        <label>Phone Number</label>
+        <input type="tel" id="cp" placeholder="10-digit mobile number"/>
+      </div>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="ce" placeholder="you@example.com"/>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="cpw" placeholder="At least 6 characters"/>
+      </div>
+
+      <button class="btn-big btn-primary" id="pay-btn" style="width:100%;font-size:14px;margin-top:6px">Continue to Payment →</button>
+      <p class="co-note">Payments are processed securely via Razorpay. We never store your card details.</p>
+    </div>
+
+    <!-- Shown if Razorpay isn't configured on the backend yet -->
+    <div class="fallback-box" id="fallback-box" style="display:none">
+      <div class="ic">📩</div>
+      <h3>Almost there</h3>
+      <p style="font-size:13px;color:var(--light);margin-top:8px;line-height:1.6">
+        Online payments are being finalized for this plan. Your account is created and your order is saved —
+        our team will reach out within 24 hours on WhatsApp/email to complete payment securely.
+      </p>
+      <button class="btn-big btn-ghost" style="margin-top:16px" onclick="window.location.href='../index.html'">Back to Home</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/toast.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    var PLANS = {
+      mains:    { name: 'Mains Prep',        amount: 799,  feat: '10,000 Mains questions · 30 chapter tests' },
+      advanced: { name: 'Advanced Prep',     amount: 899,  feat: '5,000 Advanced questions · 50 mock tests' },
+      bundle:   { name: 'Mains + Advanced',  amount: 1099, feat: '15,000+ questions · 100+ mocks · AI planner' },
+    };
+
+    var params   = new URLSearchParams(window.location.search);
+    var planKey  = params.get('plan');
+    var plan     = PLANS[planKey] || PLANS.bundle;
+    if (!PLANS[planKey]) planKey = 'bundle';
+
+    document.getElementById('co-title').textContent = 'Get ' + plan.name;
+    document.getElementById('plan-name').textContent = plan.name;
+    document.getElementById('plan-feat').textContent = plan.feat;
+    document.getElementById('plan-amt').textContent  = '₹' + plan.amount.toLocaleString('en-IN') + '/yr';
+
+    var mode = 'signup'; // or 'login'
+    var toggleSignup = document.getElementById('toggle-signup');
+    var toggleLogin  = document.getElementById('toggle-login');
+    var fieldName    = document.getElementById('field-name');
+    var fieldPhone   = document.getElementById('field-phone');
+    var payBtn       = document.getElementById('pay-btn');
+
+    function setMode(m) {
+      mode = m;
+      toggleSignup.classList.toggle('active', m === 'signup');
+      toggleLogin.classList.toggle('active', m === 'login');
+      fieldName.style.display  = m === 'signup' ? 'flex' : 'none';
+      fieldPhone.style.display = m === 'signup' ? 'flex' : 'none';
+    }
+    toggleSignup.addEventListener('click', function () { setMode('signup'); });
+    toggleLogin.addEventListener('click', function () { setMode('login'); });
+
+    function validEmail(v) { return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v.trim()); }
+    function validPhone(v) { return /^[0-9]{10}$/.test(v.trim()); }
+
+    function setErr(el, show) { el.classList.toggle('err', !!show); }
+
+    function getAuthToken() { return localStorage.getItem('dakhilaa_token'); }
+    function setAuthToken(t) { localStorage.setItem('dakhilaa_token', t); }
+
+    function authenticate() {
+      var email = document.getElementById('ce').value.trim();
+      var pw    = document.getElementById('cpw').value;
+      var name  = document.getElementById('cn').value.trim();
+      var phone = document.getElementById('cp').value.trim();
+
+      var ok = true;
+      if (!validEmail(email)) { setErr(document.getElementById('ce'), true); ok = false; }
+      else setErr(document.getElementById('ce'), false);
+      if (pw.length < 6) { setErr(document.getElementById('cpw'), true); ok = false; }
+      else setErr(document.getElementById('cpw'), false);
+
+      if (mode === 'signup') {
+        if (name.length < 2) { setErr(document.getElementById('cn'), true); ok = false; }
+        else setErr(document.getElementById('cn'), false);
+        if (!validPhone(phone)) { setErr(document.getElementById('cp'), true); ok = false; }
+        else setErr(document.getElementById('cp'), false);
+      }
+
+      if (!ok) {
+        if (window.showToast) showToast('Please fix the highlighted fields.', 'error');
+        return Promise.reject(new Error('validation'));
+      }
+
+      var url  = window.DAKHILAA_API_BASE + (mode === 'signup' ? '/auth/register' : '/auth/login');
+      var body = mode === 'signup' ? { name: name, email: email, phone: phone, password: pw } : { email: email, password: pw };
+
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.data.error || 'Authentication failed');
+          setAuthToken(res.data.token);
+          return res.data.token;
+        });
+    }
+
+    function createOrder(token) {
+      return fetch(window.DAKHILAA_API_BASE + '/payment/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ planType: planKey }),
+      }).then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); });
+    }
+
+    function openRazorpay(order, token) {
+      if (typeof Razorpay === 'undefined') {
+        if (window.showToast) showToast('Payment widget failed to load. Please refresh and try again.', 'error');
+        return;
+      }
+      var rzp = new Razorpay({
+        key: order.keyId,
+        amount: order.amount,
+        currency: 'INR',
+        name: 'Dakhilaa',
+        description: order.planName,
+        order_id: order.order.id,
+        handler: function (response) {
+          fetch(window.DAKHILAA_API_BASE + '/payment/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpaySignature: response.razorpay_signature,
+              planType: planKey,
+            }),
+          })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              if (d.success) {
+                if (window.showToast) showToast('Payment successful! Plan activated. 🎉', 'success');
+                setTimeout(function () { window.location.href = '../index.html'; }, 1200);
+              } else {
+                if (window.showToast) showToast(d.error || 'Payment verification failed.', 'error');
+              }
+            });
+        },
+        theme: { color: '#FF6B35' },
+      });
+      rzp.open();
+    }
+
+    function handleCheckout() {
+      payBtn.disabled = true;
+      payBtn.textContent = 'Please wait…';
+
+      authenticate()
+        .then(function (token) { return createOrder(token).then(function (res) { return { res: res, token: token }; }); })
+        .then(function (r) {
+          if (r.res.status === 503) {
+            // Razorpay not configured on the backend yet — degrade gracefully instead of breaking checkout
+            document.getElementById('co-form').style.display = 'none';
+            document.getElementById('fallback-box').style.display = 'block';
+            return;
+          }
+          if (!r.res.data.success) {
+            throw new Error(r.res.data.error || 'Could not start checkout');
+          }
+          openRazorpay(r.res.data, r.token);
+        })
+        .catch(function (err) {
+          if (err.message !== 'validation' && window.showToast) {
+            showToast(err.message || 'Something went wrong. Please try again.', 'error');
+          }
+        })
+        .finally(function () {
+          payBtn.disabled = false;
+          payBtn.textContent = 'Continue to Payment →';
+        });
+    }
+
+    payBtn.addEventListener('click', handleCheckout);
+    ['cn', 'cp', 'ce', 'cpw'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', function () { setErr(this, false); });
+    });
+  }());
+  </script>
+</body>
+</html>
