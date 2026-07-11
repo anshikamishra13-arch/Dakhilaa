@@ -1,0 +1,77 @@
+/* ============================================================
+   theme.css — Light / Dark mode token overrides
+   Add the <link> for this AFTER styles.css, components.css,
+   and responsive.css in your <head>, or paste this block
+   directly under the :root{...} block in styles.css.
+   ============================================================ */
+
+/* Dark is your existing default (defined in :root inside styles.css).
+   This block only overrides tokens when data-theme="light" is set
+   on <html>. Everything else (components.css, responsive.css) keeps
+   working automatically since they reference var(--bg), var(--card), etc. */
+
+html[data-theme="light"] {
+  --bg:      #FAFAF8;
+  --bg2:     #F2F1ED;
+  --card:    #FFFFFF;
+  --card2:   #F6F5F1;
+  --border:  #E3E1D9;
+  --border2: #D3D0C4;
+
+  --orange:  #E8532A;   /* slightly deepened for contrast on light bg */
+  --orange2: #FF8C5A;
+  --teal:    #00A78A;
+  --purple:  #7C3AED;
+  --red:     #DC2626;
+  --green:   #059669;
+  --yellow:  #D97706;
+
+  --white:   #14181F;   /* acts as primary text color */
+  --muted:   #6B7686;
+  --light:   #4A5568;
+
+  --shadow-sm: 0 4px 16px rgba(0,0,0,.06);
+  --shadow-md: 0 8px 32px rgba(0,0,0,.08);
+  --shadow-lg: 0 16px 56px rgba(0,0,0,.10);
+}
+
+/* Smooth crossfade when switching themes */
+body, nav#navbar, .card, .pc, .tc, .fc, footer, #toast,
+.pred-card, .modal-content {
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+
+/* ── Theme toggle button ─────────────────────────────────────── */
+.theme-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 100px;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  transition: background .25s ease, border-color .25s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle .knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  transform: translateX(0);
+  transition: transform .25s ease, background .25s ease;
+}
+
+html[data-theme="light"] .theme-toggle .knob {
+  transform: translateX(20px);
+}
+
+.theme-toggle:hover { border-color: var(--orange); }
