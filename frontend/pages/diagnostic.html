@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dakhilaa — Diagnostic Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
+  <style>
+    .diag-wrap { min-height: 100vh; padding: 90px 24px 60px; max-width: 720px; margin: 0 auto; }
+    .diag-header { text-align: center; margin-bottom: 40px; }
+    .diag-header h1 { font-family: var(--fh); font-size: clamp(26px, 4vw, 40px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 10px; }
+    .diag-header p { font-size: 14px; color: var(--light); line-height: 1.7; }
+    .progress-bar-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 99px; height: 8px; margin-bottom: 12px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--orange2)); border-radius: 99px; transition: width .4s ease; width: 0%; }
+    .progress-label { font-size: 12px; color: var(--muted); text-align: right; margin-bottom: 28px; }
+    .q-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 20px; animation: fadeUp .3s ease; }
+    .q-meta { font-size: 11px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+    .q-text { font-size: 17px; font-weight: 500; line-height: 1.65; margin-bottom: 28px; }
+    .q-options { display: flex; flex-direction: column; gap: 12px; }
+    .q-opt { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 18px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all .2s; display: flex; align-items: center; gap: 14px; }
+    .q-opt:hover { border-color: var(--orange); background: rgba(255,107,53,.05); }
+    .q-opt.selected { border-color: var(--orange); background: rgba(255,107,53,.1); color: var(--orange); }
+    .opt-label { width: 26px; height: 26px; min-width: 26px; background: var(--border); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; font-family: var(--fh); }
+    .q-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+    .subj-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+    .subj-tab { padding: 7px 16px; border-radius: 99px; font-size: 12px; font-weight: 600; cursor: default; border: 1px solid var(--border); color: var(--muted); background: var(--card); }
+    .subj-tab.active-phy { border-color: rgba(255,107,53,.4); color: var(--orange); background: rgba(255,107,53,.07); }
+    .subj-tab.active-che { border-color: rgba(0,212,170,.4); color: var(--teal); background: rgba(0,212,170,.07); }
+    .subj-tab.active-mat { border-color: rgba(139,92,246,.4); color: var(--purple); background: rgba(139,92,246,.07); }
+    .btn-link { background: transparent; color: var(--orange); border: 1.5px solid var(--orange); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location.href='../index.html'">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+    <div class="nav-right">
+      <span id="user-name-display" style="font-size:13px;color:var(--light)"></span>
+    </div>
+  </nav>
+
+  <div class="diag-wrap">
+    <div class="diag-header">
+      <div class="hero-badge">🎯 15-Minute Diagnostic</div>
+      <h1>JEE Weak Topic Finder</h1>
+      <p>Answer honestly. The accuracy of your results depends on it.<br/>30 questions · ~15 minutes · Instant report.</p>
+    </div>
+
+    <div class="subj-tabs" id="subj-tabs">
+      <div class="subj-tab" id="tab-phy">⚡ Physics</div>
+      <div class="subj-tab" id="tab-che">🧪 Chemistry</div>
+      <div class="subj-tab" id="tab-mat">📐 Maths</div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="prog-fill"></div>
+    </div>
+    <div class="progress-label" id="prog-label">Question 1 of 30</div>
+
+    <div class="q-card" id="q-card">
+      <div class="q-meta" id="q-meta"></div>
+      <div class="q-text" id="q-text">Loading question...</div>
+      <div class="q-options" id="q-opts"></div>
+    </div>
+
+    <div class="q-actions">
+      <button class="btn-big btn-ghost" id="prev-btn" style="display:none">← Previous</button>
+      <button class="btn-big btn-primary" id="next-btn">Next →</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="../assets/js/toast.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    var questions = [
+      { subject:'Physics', topic:'Kinematics', text:'A particle moves with uniform acceleration. If velocity at t=2s is 10 m/s and at t=4s is 18 m/s, the acceleration is:', opts:['2 m/s²','4 m/s²','6 m/s²','8 m/s²'], ans:1 },
+      { subject:'Physics', topic:'Laws of Motion', text:'A block of mass 5 kg on a frictionless surface is pushed by a 20N force. Its acceleration is:', opts:['1 m/s²','2 m/s²','4 m/s²','5 m/s²'], ans:2 },
+      { subject:'Physics', topic:'Work & Energy', text:'A 2 kg object is lifted 5 m. Work done against gravity (g=10):', opts:['10 J','50 J','100 J','200 J'], ans:2 },
+      { subject:'Physics', topic:'Gravitation', text:'The escape velocity from Earth\'s surface is approximately:', opts:['7.9 km/s','11.2 km/s','9.8 km/s','14.1 km/s'], ans:1 },
+      { subject:'Physics', topic:'Thermodynamics', text:'In an adiabatic process:', opts:['ΔQ = 0','ΔW = 0','ΔU = 0','ΔT = 0'], ans:0 },
+      { subject:'Physics', topic:'Waves', text:'The speed of sound in air at 0°C is approximately:', opts:['232 m/s','332 m/s','432 m/s','532 m/s'], ans:1 },
+      { subject:'Physics', topic:'Electrostatics', text:'Electric field inside a hollow charged conductor is:', opts:['Maximum','Minimum','Zero','Depends on shape'], ans:2 },
+      { subject:'Physics', topic:'Current Electricity', text:'In a series circuit, the quantity that remains the same is:', opts:['Voltage','Current','Resistance','Power'], ans:1 },
+      { subject:'Physics', topic:'Optics', text:'The focal length of a concave mirror is 10 cm. Its radius of curvature is:', opts:['5 cm','10 cm','20 cm','40 cm'], ans:2 },
+      { subject:'Physics', topic:'Modern Physics', text:'The photoelectric effect proves that light has:', opts:['Wave nature','Particle nature','Both','Neither'], ans:1 },
+      { subject:'Chemistry', topic:'Mole Concept', text:'Number of atoms in 2 moles of oxygen gas (O₂):', opts:['6.022×10²³','1.2044×10²⁴','2.4088×10²⁴','3.0×10²⁴'], ans:2 },
+      { subject:'Chemistry', topic:'Periodic Table', text:'The element with the highest electronegativity is:', opts:['Oxygen','Chlorine','Fluorine','Nitrogen'], ans:2 },
+      { subject:'Chemistry', topic:'Chemical Bonding', text:'The shape of water (H₂O) molecule is:', opts:['Linear','Bent/Angular','Trigonal planar','Tetrahedral'], ans:1 },
+      { subject:'Chemistry', topic:'Thermochemistry', text:'A reaction with negative ΔH is called:', opts:['Endothermic','Exothermic','Isothermal','Adiabatic'], ans:1 },
+      { subject:'Chemistry', topic:'Equilibrium', text:'Le Chatelier\'s principle states that if a system at equilibrium is disturbed, it will:', opts:['Reach a new equilibrium','Shift to oppose the change','Stop reacting','Increase temperature'], ans:1 },
+      { subject:'Chemistry', topic:'Organic Chemistry', text:'The IUPAC name of CH₃-CH₂-OH is:', opts:['Methanol','Ethanol','Propanol','Butanol'], ans:1 },
+      { subject:'Chemistry', topic:'Electrochemistry', text:'In electrolysis, oxidation occurs at:', opts:['Cathode','Anode','Both electrodes','Neither'], ans:1 },
+      { subject:'Chemistry', topic:'Coordination', text:'The oxidation state of Fe in [Fe(CN)₆]³⁻ is:', opts:['+1','+2','+3','+4'], ans:2 },
+      { subject:'Chemistry', topic:'p-Block Elements', text:'Which noble gas is most abundant in the Earth\'s atmosphere?', opts:['Helium','Neon','Argon','Krypton'], ans:2 },
+      { subject:'Chemistry', topic:'Reaction Kinetics', text:'A first-order reaction has a half-life of 10 min. After 30 min, fraction remaining is:', opts:['1/2','1/4','1/8','1/16'], ans:2 },
+      { subject:'Maths', topic:'Quadratic Equations', text:'The discriminant of x² - 5x + 6 = 0 is:', opts:['1','4','10','25'], ans:0 },
+      { subject:'Maths', topic:'Trigonometry', text:'The value of sin²θ + cos²θ is always:', opts:['0','1','2','Depends on θ'], ans:1 },
+      { subject:'Maths', topic:'Sequences & Series', text:'Sum of first n natural numbers is:', opts:['n²','n(n+1)','n(n+1)/2','n(n-1)/2'], ans:2 },
+      { subject:'Maths', topic:'Limits', text:'lim(x→0) [sin(x)/x] equals:', opts:['0','1','∞','Undefined'], ans:1 },
+      { subject:'Maths', topic:'Differentiation', text:'Derivative of x³ with respect to x is:', opts:['x²','2x²','3x²','3x³'], ans:2 },
+      { subject:'Maths', topic:'Integration', text:'∫ 2x dx equals:', opts:['x + C','2x² + C','x² + C','x²/2 + C'], ans:2 },
+      { subject:'Maths', topic:'Matrices', text:'The determinant of a 2×2 identity matrix is:', opts:['0','1','2','4'], ans:1 },
+      { subject:'Maths', topic:'Probability', text:'Two fair dice are rolled. Probability of sum = 7 is:', opts:['1/6','5/36','1/4','7/36'], ans:0 },
+      { subject:'Maths', topic:'Coordinate Geometry', text:'The distance between points (0,0) and (3,4) is:', opts:['3','4','5','7'], ans:2 },
+      { subject:'Maths', topic:'3D Geometry', text:'The direction cosines of the x-axis are:', opts:['(0,0,0)','(1,0,0)','(0,1,0)','(1,1,1)'], ans:1 },
+    ];
+
+    var current = 0;
+    var answers = new Array(questions.length).fill(null);
+    var TOTAL = questions.length;
+
+    var metaEl   = document.getElementById('q-meta');
+    var textEl   = document.getElementById('q-text');
+    var optsEl   = document.getElementById('q-opts');
+    var progFill = document.getElementById('prog-fill');
+    var progLbl  = document.getElementById('prog-label');
+    var nextBtn  = document.getElementById('next-btn');
+    var prevBtn  = document.getElementById('prev-btn');
+
+    var params = new URLSearchParams(window.location.search);
+    var nameDisplay = document.getElementById('user-name-display');
+    if (nameDisplay && params.get('name')) {
+      nameDisplay.textContent = 'Hi, ' + params.get('name') + ' 👋';
+    }
+
+    function subjectClass(subj) {
+      if (subj === 'Physics') return 'active-phy';
+      if (subj === 'Chemistry') return 'active-che';
+      return 'active-mat';
+    }
+
+    function updateSubjectTabs(subj) {
+      ['tab-phy','tab-che','tab-mat'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.className = 'subj-tab';
+      });
+      var map = { Physics:'tab-phy', Chemistry:'tab-che', Maths:'tab-mat' };
+      var target = document.getElementById(map[subj]);
+      if (target) target.className = 'subj-tab ' + subjectClass(subj);
+    }
+
+    function renderQuestion() {
+      var q = questions[current];
+      metaEl.textContent = q.subject + ' · ' + q.topic + ' · Q' + (current + 1);
+      textEl.textContent = q.text;
+      optsEl.innerHTML = '';
+      updateSubjectTabs(q.subject);
+
+      var labels = ['A','B','C','D'];
+      q.opts.forEach(function (opt, i) {
+        var btn = document.createElement('button');
+        btn.className = 'q-opt';
+        if (answers[current] === i) btn.classList.add('selected');
+        btn.innerHTML = '<span class="opt-label">' + labels[i] + '</span>' + opt;
+        btn.addEventListener('click', function () {
+          answers[current] = i;
+          renderQuestion();
+        });
+        optsEl.appendChild(btn);
+      });
+
+      var done = answers.filter(function (a) { return a !== null; }).length;
+      progFill.style.width = ((current + 1) / TOTAL * 100) + '%';
+      progLbl.textContent = 'Question ' + (current + 1) + ' of ' + TOTAL + ' · ' + done + ' answered';
+      prevBtn.style.display = current > 0 ? 'inline-flex' : 'none';
+      nextBtn.textContent = current === TOTAL - 1 ? 'Finish & See Results →' : 'Next →';
+      var card = document.getElementById('q-card');
+      card.style.animation = 'none';
+      void card.offsetWidth;
+      card.style.animation = 'fadeUp .3s ease';
+    }
+
+    function goNext() {
+      if (answers[current] === null) {
+        if (window.showToast) showToast('Please select an answer before continuing.', 'warning');
+        return;
+      }
+      if (current < TOTAL - 1) {
+        current++;
+        renderQuestion();
+      } else {
+        submitTest();
+      }
+    }
+
+    function goPrev() {
+      if (current > 0) { current--; renderQuestion(); }
+    }
+
+    function submitTest() {
+      var score = 0;
+      var topicMap = {};
+
+      questions.forEach(function (q, i) {
+        var correct = answers[i] === q.ans;
+        if (correct) score++;
+        if (!topicMap[q.topic]) topicMap[q.topic] = { correct: 0, total: 0 };
+        topicMap[q.topic].total++;
+        if (correct) topicMap[q.topic].correct++;
+      });
+
+      sessionStorage.setItem('diag_score', JSON.stringify(score));
+      sessionStorage.setItem('diag_total', JSON.stringify(TOTAL));
+      sessionStorage.setItem('diag_topics', JSON.stringify(topicMap));
+      sessionStorage.setItem('diag_name', params.get('name') || 'Student');
+
+      if (window.showToast) showToast('Test complete! Loading your results…', 'success');
+      setTimeout(function () {
+        window.location.href = 'results.html';
+      }, 900);
+    }
+
+    nextBtn.addEventListener('click', goNext);
+    prevBtn.addEventListener('click', goPrev);
+    renderQuestion();
+  }());
+  </script>
+</body>
+</html>

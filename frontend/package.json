@@ -1,0 +1,9 @@
+{
+  "name": "dakhilaa-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend for the Dakhilaa educational platform",
+  "scripts": {
+    "start": "echo \"Frontend setup complete. Open index.html in a browser.\""
+  }
+}
