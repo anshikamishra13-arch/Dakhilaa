@@ -1,21 +1,21 @@
 {
-  "name": "dakhilaa",
+  "name": "dakhilaa-backend",
   "version": "1.0.0",
   "private": true,
-  "description": "Dakhilaa monorepo for backend and frontend",
-  "workspaces": [
-    "backend",
-    "frontend"
-  ],
+  "description": "Backend API for the Dakhilaa educational platform",
+  "main": "server.js",
   "scripts": {
-    "install:all": "npm install",
-    "start": "npm run start:backend",
-    "dev": "npm --workspace backend run dev",
-    "build": "echo \"No build step configured yet.\"",
-    "start:backend": "npm --workspace backend start",
-    "start:frontend": "npm --workspace frontend start"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
-    "cors": "^2.8.6"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.0",
+    "nodemailer": "^7.0.9",
+    "razorpay": "^2.9.4"
   }
 }
