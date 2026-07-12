@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+  <!-- Theme init — must run before CSS loads, prevents flash of wrong theme -->
+  <script>
+    (function() {
+      var t = localStorage.getItem('dakhilaa-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    })();
+  </script>
+
   <title>Dakhilaa — Diagnostic Test</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/styles.css"/>
   <link rel="stylesheet" href="../assets/css/components.css"/>
   <link rel="stylesheet" href="../assets/css/responsive.css"/>
+  <link rel="stylesheet" href="../assets/css/theme.css"/>
   <style>
     .diag-wrap { min-height: 100vh; padding: 90px 24px 60px; max-width: 720px; margin: 0 auto; }
     .diag-header { text-align: center; margin-bottom: 40px; }
@@ -41,6 +52,9 @@
       <span class="d">D</span>akhilaa
     </div>
     <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme">
+        <span class="knob" id="theme-toggle-icon">🌙</span>
+      </button>
       <span id="user-name-display" style="font-size:13px;color:var(--light)"></span>
     </div>
   </nav>
@@ -78,6 +92,7 @@
   <div id="toast"></div>
 
   <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/theme.js"></script>
   <script>
   (function () {
     'use strict';
