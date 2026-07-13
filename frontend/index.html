@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark light"/>
 
   <!-- Theme init — must run before CSS loads, prevents flash of wrong theme -->
   <script>
@@ -10,6 +11,9 @@
       var t = localStorage.getItem('dakhilaa-theme');
       if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      // Explicitly declare the active scheme so mobile Chrome's "force dark"
+      // doesn't override our own light/dark styling.
+      document.documentElement.style.colorScheme = t;
     })();
   </script>
 

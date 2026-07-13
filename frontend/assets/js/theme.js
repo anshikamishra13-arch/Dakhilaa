@@ -13,6 +13,9 @@
     } else {
       root.removeAttribute("data-theme"); // dark = default, no attribute needed
     }
+    // Keep this in sync so mobile Chrome's forced-dark rendering never
+    // fights with the theme the user actually picked.
+    root.style.colorScheme = theme;
     const btn = document.getElementById("theme-toggle-btn");
     if (btn) btn.setAttribute("aria-label", theme === "light" ? "Switch to dark mode" : "Switch to light mode");
     const icon = document.getElementById("theme-toggle-icon");

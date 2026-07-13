@@ -10,7 +10,15 @@
    on <html>. Everything else (components.css, responsive.css) keeps
    working automatically since they reference var(--bg), var(--card), etc. */
 
+/* Tell the browser which color scheme we support, otherwise mobile
+   Chrome's "force dark" feature will auto-darken the page and your
+   toggle will appear to do nothing (only dark ever shows). */
+:root {
+  color-scheme: dark;
+}
+
 html[data-theme="light"] {
+  color-scheme: light;
   --bg:      #FAFAF8;
   --bg2:     #F2F1ED;
   --card:    #FFFFFF;
