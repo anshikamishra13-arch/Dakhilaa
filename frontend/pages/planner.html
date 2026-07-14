@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark light"/>
+  <script>
+    (function() {
+      var t = localStorage.getItem('dakhilaa-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.style.colorScheme = t;
+    })();
+  </script>
+  <title>Dakhilaa — AI Study Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
+  <link rel="stylesheet" href="../assets/css/theme.css"/>
+  <style>
+    .pl-wrap { min-height: 100vh; padding: 90px 24px 60px; max-width: 760px; margin: 0 auto; }
+    .pl-header { text-align: center; margin-bottom: 28px; }
+    .pl-header h1 { font-family: var(--fh); font-size: clamp(24px, 4vw, 34px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 8px; }
+    .pl-header p { font-size: 14px; color: var(--light); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 24px; margin-bottom: 20px; }
+    .inputs-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+    .ig { flex: 1; min-width: 160px; }
+    .ig label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+    .ig input { width: 100%; background: var(--bg2); border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; color: var(--white); font-size: 14px; }
+    .day-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; }
+    .day-card .dh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .day-card .dh b { font-family: var(--fh); font-size: 14px; }
+    .day-card .dh span { font-size: 11px; color: var(--muted); }
+    .block { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; font-size: 13px; }
+    .block .bicon { flex-shrink: 0; }
+    .block .btxt b { color: var(--orange); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location.href='../index.html'">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme"><span class="knob" id="theme-toggle-icon">🌙</span></button>
+    </div>
+  </nav>
+
+  <div class="pl-wrap">
+    <div class="pl-header">
+      <div class="hero-badge">🤖 AI Study Planner</div>
+      <h1>Your Personalised Study Schedule</h1>
+      <p>Built from your weak topics, the time you actually have, and your exam date.</p>
+    </div>
+
+    <div id="empty-state" style="display:none;text-align:center;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px">
+      <div style="font-size:28px;margin-bottom:10px">🧭</div>
+      <h2 style="font-size:16px;margin-bottom:10px">Take the diagnostic first</h2>
+      <p style="font-size:13px;color:var(--light);max-width:420px;margin:0 auto 18px">Your plan is built around your weak topics — take the 15-minute diagnostic so we know what to prioritise.</p>
+      <button class="btn-big btn-primary" onclick="window.location.href='diagnostic.html'">Take the Diagnostic →</button>
+    </div>
+
+    <div id="content" style="display:none">
+      <div class="card">
+        <div class="inputs-row">
+          <div class="ig">
+            <label>Days until your exam</label>
+            <input type="number" id="days-input" min="1" max="90" placeholder="e.g., 14"/>
+          </div>
+          <div class="ig">
+            <label>Hours available per day</label>
+            <input type="number" id="hours-input" min="1" max="12" step="0.5" placeholder="e.g., 3"/>
+          </div>
+        </div>
+        <button class="btn-big btn-primary" id="gen-btn" style="width:100%">Generate My Plan →</button>
+      </div>
+
+      <div id="plan-output"></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/history.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    var PLAN_KEY = 'dakhilaa_study_plan_v1'; // { days, hours, generatedOn, plan: [...] }
+
+    var weak = window.DakhilaaHistory ? window.DakhilaaHistory.getWeakTopics(0) : [];
+    if (!weak.length) {
+      document.getElementById('empty-state').style.display = 'block';
+      return;
+    }
+    document.getElementById('content').style.display = 'block';
+
+    var daysInput  = document.getElementById('days-input');
+    var hoursInput = document.getElementById('hours-input');
+    var genBtn     = document.getElementById('gen-btn');
+    var output     = document.getElementById('plan-output');
+
+    // Restore a previously generated plan, if any.
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(PLAN_KEY)); } catch (e) {}
+    if (saved) {
+      daysInput.value = saved.days;
+      hoursInput.value = saved.hours;
+      renderPlan(saved.plan, saved.hours);
+    }
+
+    /* Simple adaptive rule-based scheduler:
+       - Weakest topics (lowest accuracy) get more early slots and repeat more often.
+       - Each day mixes: 1 concept-revision block on a weak topic + 1 targeted-practice
+         block (linking to the practice bank) + a lighter mixed-revision block if hours allow.
+       - As exam date approaches (last 20% of days), the plan shifts to full mixed revision
+         instead of introducing new weak topics. */
+    function buildPlan(days, hoursPerDay) {
+      var weights = weak.map(function (w) { return Math.max(1, 100 - w.pct); }); // weaker topic = higher weight
+      var totalWeight = weights.reduce(function (a, b) { return a + b; }, 0);
+      var revisionCutoff = Math.max(1, Math.round(days * 0.8)); // last ~20% = pure revision
+
+      var plan = [];
+      var topicPointer = 0;
+
+      for (var d = 1; d <= days; d++) {
+        var blocks = [];
+        var isRevisionPhase = d > revisionCutoff;
+
+        if (!isRevisionPhase) {
+          // Pick the day's primary weak topic — cycle weighted toward weaker ones by
+          // repeating weaker topics more often across the cycle.
+          var pickIdx = topicPointer % weak.length;
+          var topic = weak[pickIdx];
+          topicPointer++;
+
+          blocks.push({ icon: '📘', text: 'Revise core concepts: <b>' + topic.topic + '</b> (' + topic.pct + '% accuracy currently)' });
+          blocks.push({ icon: '⚡', text: 'Daily Targeted Practice set on <b>' + topic.topic + '</b> — see Practice page' });
+          if (hoursPerDay >= 2.5) {
+            var secondIdx = (topicPointer) % weak.length;
+            blocks.push({ icon: '🔁', text: 'Quick mixed revision: <b>' + weak[secondIdx].topic + '</b> flash review (15-20 min)' });
+          }
+        } else {
+          blocks.push({ icon: '🧠', text: 'Full mixed revision — cycle through all weak topics: ' + weak.map(function (w) { return w.topic; }).join(', ') });
+          blocks.push({ icon: '📝', text: 'Timed mock practice covering Physics, Chemistry & Maths' });
+        }
+
+        if (hoursPerDay >= 4) {
+          blocks.push({ icon: '✅', text: 'Buffer / doubt-clearing block — review anything unresolved this week' });
+        }
+
+        plan.push({ day: d, blocks: blocks });
+      }
+      return plan;
+    }
+
+    function renderPlan(plan, hoursPerDay) {
+      output.innerHTML = '';
+      plan.forEach(function (p) {
+        var card = document.createElement('div');
+        card.className = 'day-card';
+        card.innerHTML =
+          '<div class="dh"><b>Day ' + p.day + '</b><span>~' + hoursPerDay + ' hrs</span></div>' +
+          p.blocks.map(function (b) {
+            return '<div class="block"><span class="bicon">' + b.icon + '</span><span class="btxt">' + b.text + '</span></div>';
+          }).join('');
+        output.appendChild(card);
+      });
+    }
+
+    genBtn.addEventListener('click', function () {
+      var days = parseInt(daysInput.value, 10);
+      var hours = parseFloat(hoursInput.value);
+
+      if (!days || days < 1 || days > 90) {
+        if (window.showToast) showToast('Enter a valid number of days (1–90).', 'warning');
+        daysInput.focus();
+        return;
+      }
+      if (!hours || hours < 1 || hours > 12) {
+        if (window.showToast) showToast('Enter valid daily hours (1–12).', 'warning');
+        hoursInput.focus();
+        return;
+      }
+
+      var plan = buildPlan(days, hours);
+      localStorage.setItem(PLAN_KEY, JSON.stringify({ days: days, hours: hours, generatedOn: new Date().toISOString(), plan: plan }));
+      renderPlan(plan, hours);
+      if (window.showToast) showToast('Your ' + days + '-day plan is ready! 🎯', 'success');
+      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }());
+  </script>
+</body>
+</html>

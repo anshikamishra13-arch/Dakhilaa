@@ -95,6 +95,7 @@
 
   <script src="../assets/js/toast.js"></script>
   <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/history.js"></script>
   <script>
   (function () {
     'use strict';
@@ -257,6 +258,9 @@
       sessionStorage.setItem('diag_topics', JSON.stringify(topicMap));
       sessionStorage.setItem('diag_name', params.get('name') || 'Student');
       sessionStorage.removeItem(STORAGE_KEY);
+
+      // Persist this attempt locally so Progress/Practice/Planner pages can use it.
+      if (window.DakhilaaHistory) window.DakhilaaHistory.saveAttempt(topicMap, score, TOTAL);
 
       if (window.showToast) showToast('Test complete! Loading your results…', 'success');
       setTimeout(function () {

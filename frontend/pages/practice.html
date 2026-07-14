@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark light"/>
+  <script>
+    (function() {
+      var t = localStorage.getItem('dakhilaa-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.style.colorScheme = t;
+    })();
+  </script>
+  <title>Dakhilaa — Daily Targeted Practice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
+  <link rel="stylesheet" href="../assets/css/theme.css"/>
+  <style>
+    .pr-wrap { min-height: 100vh; padding: 90px 24px 60px; max-width: 720px; margin: 0 auto; }
+    .pr-header { text-align: center; margin-bottom: 28px; }
+    .pr-header h1 { font-family: var(--fh); font-size: clamp(24px, 4vw, 34px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 8px; }
+    .pr-header p { font-size: 14px; color: var(--light); line-height: 1.7; }
+    .streak-card { display: flex; align-items: center; justify-content: center; gap: 24px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+    .streak-stat { text-align: center; }
+    .streak-stat b { display: block; font-family: var(--fh); font-size: 22px; }
+    .streak-stat span { font-size: 11px; color: var(--muted); }
+    .topic-chip { display: inline-block; padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 600; background: rgba(255,107,53,.1); color: var(--orange); border: 1px solid rgba(255,107,53,.3); margin: 3px; }
+    .q-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 20px; }
+    .q-meta { font-size: 11px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+    .q-text { font-size: 17px; font-weight: 500; line-height: 1.65; margin-bottom: 28px; }
+    .q-options { display: flex; flex-direction: column; gap: 12px; }
+    .q-opt { background: var(--bg2); color: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 18px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all .2s; display: flex; align-items: center; gap: 14px; text-align: left; }
+    .q-opt:hover { border-color: var(--orange); background: rgba(255,107,53,.05); }
+    .q-opt.selected { border-color: var(--orange); background: rgba(255,107,53,.1); color: var(--orange); }
+    .q-opt.correct { border-color: var(--green,#2ecc71); background: rgba(46,204,113,.1); }
+    .q-opt.wrong { border-color: var(--red,#e74c3c); background: rgba(231,76,60,.1); }
+    .opt-label { width: 26px; height: 26px; min-width: 26px; background: var(--border); color: var(--white); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; font-family: var(--fh); }
+    .q-actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+    .done-card { text-align: center; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
+    .done-card h2 { font-family: var(--fh); font-size: 24px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location.href='../index.html'">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme"><span class="knob" id="theme-toggle-icon">🌙</span></button>
+    </div>
+  </nav>
+
+  <div class="pr-wrap">
+    <div class="pr-header">
+      <div class="hero-badge">⚡ Daily Targeted Practice</div>
+      <h1>Today's Practice Set</h1>
+      <p id="pr-sub">Curated from your weakest topics — a few focused questions, not a full mock.</p>
+    </div>
+
+    <div class="streak-card">
+      <div class="streak-stat"><b id="streak-count">0</b><span>Day streak</span></div>
+      <div class="streak-stat"><b id="attempts-count">0</b><span>Sets completed</span></div>
+      <div class="streak-stat"><b id="today-status">—</b><span>Today</span></div>
+    </div>
+
+    <div id="empty-state" style="display:none;text-align:center;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px">
+      <div style="font-size:28px;margin-bottom:10px">🧭</div>
+      <h2 style="font-size:16px;margin-bottom:10px">Take the diagnostic first</h2>
+      <p style="font-size:13px;color:var(--light);max-width:420px;margin:0 auto 18px">We build your daily set from your weak topics — take the 15-minute diagnostic once so we know what to target.</p>
+      <button class="btn-big btn-primary" onclick="window.location.href='diagnostic.html'">Take the Diagnostic →</button>
+    </div>
+
+    <div id="topics-line" style="text-align:center;margin-bottom:18px"></div>
+
+    <div id="quiz-area"></div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/history.js"></script>
+  <script src="../assets/data/practiceBank.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    var STREAK_KEY = 'dakhilaa_practice_streak_v1'; // { lastDate, streak, setsCompleted }
+    var TODAY_SET_KEY_PREFIX = 'dakhilaa_practice_set_'; // + date
+
+    function todayStr() { return new Date().toISOString().slice(0, 10); }
+
+    function loadStreakState() {
+      try { return JSON.parse(localStorage.getItem(STREAK_KEY)) || { lastDate: null, streak: 0, setsCompleted: 0 }; }
+      catch (e) { return { lastDate: null, streak: 0, setsCompleted: 0 }; }
+    }
+    function saveStreakState(s) {
+      try { localStorage.setItem(STREAK_KEY, JSON.stringify(s)); } catch (e) {}
+    }
+
+    var streakState = loadStreakState();
+    document.getElementById('streak-count').textContent = streakState.streak || 0;
+    document.getElementById('attempts-count').textContent = streakState.setsCompleted || 0;
+
+    var weak = window.DakhilaaHistory ? window.DakhilaaHistory.getWeakTopics(5) : [];
+
+    if (!weak.length) {
+      document.getElementById('empty-state').style.display = 'block';
+      document.getElementById('streak-count').parentElement.parentElement.style.display = 'none';
+      return;
+    }
+
+    document.getElementById('topics-line').innerHTML =
+      "Today's focus: " + weak.map(function (w) { return '<span class="topic-chip">' + w.topic + ' (' + w.pct + '%)</span>'; }).join('');
+
+    // Build (or reload) today's fixed set so refreshing mid-set doesn't reshuffle it.
+    var setKey = TODAY_SET_KEY_PREFIX + todayStr();
+    var todaysSet = null;
+    try { todaysSet = JSON.parse(localStorage.getItem(setKey)); } catch (e) {}
+
+    var alreadyDoneToday = streakState.lastDate === todayStr();
+    document.getElementById('today-status').textContent = alreadyDoneToday ? '✅ Done' : 'Pending';
+
+    if (!todaysSet) {
+      todaysSet = weak.map(function (w) {
+        var bank = PRACTICE_BANK[w.topic];
+        if (!bank || !bank.length) return null;
+        var q = bank[Math.floor(Math.random() * bank.length)];
+        return { topic: w.topic, text: q.text, opts: q.opts, ans: q.ans };
+      }).filter(Boolean);
+      localStorage.setItem(setKey, JSON.stringify(todaysSet));
+    }
+
+    if (!todaysSet.length) {
+      document.getElementById('quiz-area').innerHTML = '<p style="text-align:center;color:var(--light);font-size:13px">No practice questions available for your current weak topics yet — check back soon, we add new ones regularly.</p>';
+      return;
+    }
+
+    var current = 0;
+    var correctCount = 0;
+    var answered = [];
+
+    var area = document.getElementById('quiz-area');
+
+    function renderQ() {
+      if (current >= todaysSet.length) return renderDone();
+      var q = todaysSet[current];
+      var labels = ['A', 'B', 'C', 'D'];
+      area.innerHTML =
+        '<div class="q-card">' +
+          '<div class="q-meta">' + q.topic + ' · Q' + (current + 1) + ' of ' + todaysSet.length + '</div>' +
+          '<div class="q-text">' + q.text + '</div>' +
+          '<div class="q-options" id="qo"></div>' +
+        '</div>';
+      var opts = document.getElementById('qo');
+      q.opts.forEach(function (opt, i) {
+        var btn = document.createElement('button');
+        btn.className = 'q-opt';
+        btn.innerHTML = '<span class="opt-label">' + labels[i] + '</span>' + opt;
+        btn.addEventListener('click', function () {
+          if (answered[current] !== undefined) return; // lock after first pick
+          answered[current] = i;
+          var isCorrect = i === q.ans;
+          if (isCorrect) correctCount++;
+          Array.from(opts.children).forEach(function (b, j) {
+            b.classList.toggle('correct', j === q.ans);
+            b.classList.toggle('wrong', j === i && !isCorrect);
+          });
+          setTimeout(function () { current++; renderQ(); }, 700);
+        });
+        opts.appendChild(btn);
+      });
+    }
+
+    function renderDone() {
+      var pct = Math.round((correctCount / todaysSet.length) * 100);
+
+      if (!alreadyDoneToday) {
+        var today = todayStr();
+        var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        streakState.streak = streakState.lastDate === yesterday ? (streakState.streak || 0) + 1 : 1;
+        streakState.lastDate = today;
+        streakState.setsCompleted = (streakState.setsCompleted || 0) + 1;
+        saveStreakState(streakState);
+      }
+
+      area.innerHTML =
+        '<div class="done-card">' +
+          '<div style="font-size:32px;margin-bottom:8px">🎯</div>' +
+          '<h2>' + correctCount + ' / ' + todaysSet.length + ' correct (' + pct + '%)</h2>' +
+          '<p style="font-size:13px;color:var(--light);margin-bottom:20px">Nice work — come back tomorrow for a fresh set targeting your current weak topics.</p>' +
+          '<button class="btn-big btn-primary" onclick="window.location.href=\'progress.html\'">See Your Progress →</button>' +
+        '</div>';
+
+      if (window.showToast) showToast('Practice set complete! Streak: ' + streakState.streak + ' day(s) 🔥', 'success');
+    }
+
+    renderQ();
+  }());
+  </script>
+</body>
+</html>
