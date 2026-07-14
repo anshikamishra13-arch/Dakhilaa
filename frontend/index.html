@@ -172,12 +172,16 @@
       <div class="sec-title" style="margin-bottom:8px">See Your Dream College Path</div>
       <div class="sec-sub">Branch-wise cutoffs for all IITs, NITs, and IIITs — instantly.</div>
       <div class="pred-card">
-        <div class="pred-card-title">Check Your Cutoff &amp; Score Gap</div>
-        <div class="pred-card-sub">Enter your current score and select a college to see which branches are within reach.</div>
+        <div class="pred-card-title">Check Your Cutoff &amp; Rank Gap</div>
+        <div class="pred-card-sub">JEE admissions run on rank, not marks — enter your JEE Main percentile (NITs/IIITs) or JEE Advanced rank (IITs) and pick a target college.</div>
         <div class="pred-inputs">
           <div class="ig">
-            <label>Your Current Score</label>
-            <input type="number" id="pm" placeholder="e.g., 220" min="0" max="300"/>
+            <label>Your JEE Main Percentile</label>
+            <input type="number" id="pm" placeholder="e.g., 98.5" min="0" max="100" step="0.01"/>
+          </div>
+          <div class="ig" id="pmadv-group" style="display:none">
+            <label>Your JEE Advanced Rank (AIR) — required for IITs</label>
+            <input type="number" id="pmadv" placeholder="e.g., 1500" min="1"/>
           </div>
           <div class="ig">
             <label>Target College</label>
@@ -187,31 +191,72 @@
                 <option value="iitb">IIT Bombay</option>
                 <option value="iitd">IIT Delhi</option>
                 <option value="iitm">IIT Madras</option>
+                <option value="iitk">IIT Kanpur</option>
+                <option value="iitkgp">IIT Kharagpur</option>
+                <option value="iitr">IIT Roorkee</option>
+                <option value="iitg">IIT Guwahati</option>
+                <option value="iitbhu">IIT (BHU) Varanasi</option>
               </optgroup>
               <optgroup label="IIT Tier 2">
-                <option value="iitk">IIT Kanpur</option>
-                <option value="iitr">IIT Roorkee</option>
                 <option value="iith">IIT Hyderabad</option>
+                <option value="iiti">IIT Indore</option>
+                <option value="iitism">IIT (ISM) Dhanbad</option>
+                <option value="iitbbs">IIT Bhubaneswar</option>
+                <option value="iitmandi">IIT Mandi</option>
+                <option value="iitgn">IIT Gandhinagar</option>
+                <option value="iitp">IIT Patna</option>
+                <option value="iitrpr">IIT Ropar</option>
+                <option value="iitj">IIT Jodhpur</option>
               </optgroup>
               <optgroup label="IIT Tier 3">
-                <option value="iiti">IIT Indore</option>
-                <option value="iitbhu">IIT BHU</option>
-                <option value="iitg">IIT Guwahati</option>
-                <option value="iitkhg">IIT Kharagpur</option>
+                <option value="iitbhilai">IIT Bhilai</option>
+                <option value="iitgoa">IIT Goa</option>
+                <option value="iitpkd">IIT Palakkad</option>
+                <option value="iittp">IIT Tirupati</option>
+                <option value="iitjammu">IIT Jammu</option>
+                <option value="iitdh">IIT Dharwad</option>
               </optgroup>
               <optgroup label="NIT Tier 1">
                 <option value="nitt">NIT Trichy</option>
                 <option value="nitw">NIT Warangal</option>
                 <option value="nitk">NIT Surathkal</option>
+                <option value="nitrkl">NIT Rourkela</option>
               </optgroup>
               <optgroup label="NIT Tier 2">
                 <option value="nitc">NIT Calicut</option>
-                <option value="nitd">NIT Delhi</option>
-                <option value="nitr">NIT Rourkela</option>
+                <option value="nitdgp">NIT Durgapur</option>
+                <option value="nitkkr">NIT Kurukshetra</option>
+                <option value="vnit">VNIT Nagpur</option>
+                <option value="mnitj">MNIT Jaipur</option>
+                <option value="mnnit">MNNIT Allahabad</option>
+                <option value="manit">MANIT Bhopal</option>
+              </optgroup>
+              <optgroup label="NIT Tier 3">
+                <option value="nitsilchar">NIT Silchar</option>
+                <option value="nith">NIT Hamirpur</option>
+                <option value="nitj">NIT Jalandhar</option>
+                <option value="nitp">NIT Patna</option>
+                <option value="nitrr">NIT Raipur</option>
+                <option value="nitsri">NIT Srinagar</option>
+                <option value="nitag">NIT Agartala</option>
+                <option value="nituk">NIT Uttarakhand</option>
+                <option value="nitdelhi">NIT Delhi</option>
+                <option value="nitgoa">NIT Goa</option>
+                <option value="nitap">NIT Andhra Pradesh</option>
+                <option value="nitpuducherry">NIT Puducherry</option>
+                <option value="nitmanipur">NIT Manipur</option>
+                <option value="nitmeghalaya">NIT Meghalaya</option>
+                <option value="nitmizoram">NIT Mizoram</option>
+                <option value="nitnagaland">NIT Nagaland</option>
+                <option value="nitsikkim">NIT Sikkim</option>
+                <option value="nitarunachal">NIT Arunachal Pradesh</option>
               </optgroup>
               <optgroup label="IIIT">
                 <option value="iiith">IIIT Hyderabad</option>
                 <option value="iiitd">IIIT Delhi</option>
+                <option value="iiitb">IIIT Bangalore</option>
+                <option value="iiitv">IIIT Vadodara</option>
+                <option value="iiitna">IIIT Naya Raipur</option>
               </optgroup>
             </select>
           </div>
