@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dakhilaa — Mains Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/theme.css"/>
+  <style>
+    .dash-wrap{min-height:100vh;padding:90px 24px 60px;max-width:900px;margin:0 auto}
+    .dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .plan-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location.href='../index.html'">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+  </nav>
+
+  <div class="dash-wrap">
+    <div class="dash-header">
+      <div>
+        <div class="hero-badge">📊 Mains Plan</div>
+        <h1>Mains Dashboard</h1>
+        <p style="color:var(--light)">Overview and quick actions for the Mains plan subscribers.</p>
+      </div>
+      <div>
+        <a class="btn-big btn-primary" href="pricing.html?plan=mains">Manage Plan</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <strong>Included:</strong> 10,000 Mains questions · 30 chapter tests
+    </div>
+
+    <div class="plan-card">
+      <h3>Suggested actions</h3>
+      <ul>
+        <li>Start daily practice set</li>
+        <li>View weak-topic suggestions</li>
+        <li>Schedule chapter tests</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dakhilaa — Bundle Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/theme.css"/>
+  <style>
+    .dash-wrap{min-height:100vh;padding:90px 24px 60px;max-width:900px;margin:0 auto}
+    .dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .plan-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location.href='../index.html'">
+      <div class="logo-dot"></div>
+      <span class="d">D</span>akhilaa
+    </div>
+  </nav>
+
+  <div class="dash-wrap">
+    <div class="dash-header">
+      <div>
+        <div class="hero-badge">✨ Bundle Plan</div>
+        <h1>Bundle Dashboard</h1>
+        <p style="color:var(--light)">Full access dashboard for bundle subscribers.</p>
+      </div>
+      <div>
+        <a class="btn-big btn-primary" href="pricing.html?plan=bundle">Manage Plan</a>
+      </div>
+    </div>
+
+    <div class="plan-card">
+      <strong>Included:</strong> 15,000+ questions · 100+ mocks · AI planner
+    </div>
+
+    <div class="plan-card">
+      <h3>Suggested actions</h3>
+      <ul>
+        <li>Activate AI planner</li>
+        <li>Schedule weekly mocks</li>
+        <li>Export study calendar</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

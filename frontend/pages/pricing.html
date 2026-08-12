@@ -67,7 +67,10 @@
         <div class="pname" id="plan-name">—</div>
         <div class="pfeat" id="plan-feat">—</div>
       </div>
-      <div class="pamt" id="plan-amt">—</div>
+      <div style="text-align:right">
+        <div class="pamt" id="plan-amt">—</div>
+        <div style="margin-top:8px"><a id="plan-dashboard-link" class="btn-link" href="#">Open dashboard</a></div>
+      </div>
     </div>
 
     <div class="co-form" id="co-form">
@@ -134,6 +137,12 @@
     document.getElementById('plan-name').textContent = plan.name;
     document.getElementById('plan-feat').textContent = plan.feat;
     document.getElementById('plan-amt').textContent  = '₹' + plan.amount.toLocaleString('en-IN') + '/yr';
+    // Update dashboard preview link
+    var dashLink = document.getElementById('plan-dashboard-link');
+    if (dashLink) {
+      var map = { mains: 'dashboard-mains.html', advanced: 'dashboard-advanced.html', bundle: 'dashboard-bundle.html' };
+      dashLink.href = map[planKey] || 'dashboard-bundle.html';
+    }
 
     var mode = 'signup'; // or 'login'
     var toggleSignup = document.getElementById('toggle-signup');
