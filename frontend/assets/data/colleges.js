@@ -260,6 +260,10 @@ const COLLEGES = {
     name: 'IIIT Bangalore', tier: 'IIIT', examType: 'main',
     branches: { 'CSE': 2500, 'ECE': 5500 }
   },
+     iiita: {
+    name: 'IIIT Allahabad', tier: 'IIIT', examType: 'main',
+    branches: { 'IT-BIn':4100, 'IT': 4700,'ECE':6700 }
+  },
   iiitv: {
     name: 'IIIT Vadodara', tier: 'IIIT', examType: 'main',
     branches: { 'CSE': 6000, 'ECE': 12000 }
@@ -267,6 +271,10 @@ const COLLEGES = {
   iiitna: {
     name: 'IIIT Naya Raipur', tier: 'IIIT', examType: 'main',
     branches: { 'CSE': 9000, 'ECE': 18000 }
+  },
+   iiita: {
+    name: 'IIIT Allahabad', tier: 'IIIT', examType: 'main',
+    branches: { 'CSE': 9000, 'IT': 18000 }
   },
 
 };

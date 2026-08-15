@@ -3,14 +3,48 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Dakhilaa — Mains Dashboard</title>
+  <meta name="color-scheme" content="dark light"/>
+  <script>
+    (function() {
+      var t = localStorage.getItem('dakhilaa-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.style.colorScheme = t;
+    })();
+  </script>
+  <title>Dakhilaa — Mains Student Dashboard</title>
   <link rel="stylesheet" href="../assets/css/styles.css"/>
   <link rel="stylesheet" href="../assets/css/components.css"/>
   <link rel="stylesheet" href="../assets/css/theme.css"/>
   <style>
-    .dash-wrap{min-height:100vh;padding:90px 24px 60px;max-width:900px;margin:0 auto}
-    .dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-    .plan-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+    body { background: var(--bg); }
+    .dash-wrap { min-height: 100vh; padding: 90px 24px 70px; max-width: 1100px; margin: 0 auto; }
+    .dash-header { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 28px; }
+    .dash-header h1 { font-family: var(--fh); font-size: clamp(30px, 5vw, 48px); line-height: 1.08; letter-spacing: -1.5px; margin-top: 8px; }
+    .dash-header p { color: var(--light); margin-top: 10px; max-width: 560px; }
+    .header-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 22px; }
+    .stat-card, .panel { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow-sm); }
+    .stat-card .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1.6px; }
+    .stat-card .value { font-family: var(--fh); font-size: clamp(28px, 4vw, 44px); margin-top: 10px; letter-spacing: -1.2px; color: var(--orange); }
+    .stat-card .meta { margin-top: 8px; font-size: 12px; color: var(--light); }
+    .two-col { display: grid; grid-template-columns: 1.25fr .75fr; gap: 18px; margin-top: 12px; }
+    .panel { margin-bottom: 18px; }
+    .panel-title { font-family: var(--fh); font-size: 18px; letter-spacing: -.4px; margin-bottom: 18px; }
+    .session { background: rgba(255,255,255,.02); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+    .session-head { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--white); margin-bottom: 12px; }
+    .session p { font-size: 12px; color: var(--light); margin-top: 12px; }
+    .progress { height: 10px; border-radius: 99px; background: rgba(255,255,255,.05); overflow: hidden; }
+    .progress > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--orange), var(--orange2)); width: 72%; }
+    .list { list-style: none; display: grid; gap: 12px; }
+    .list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.02); border: 1px solid var(--border); font-size: 13px; }
+    .badge { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; height: 24px; border-radius: 999px; font-size: 11px; font-weight: 700; background: rgba(255,107,53,.1); border: 1px solid rgba(255,107,53,.25); color: var(--orange); }
+    .mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .mini-card { background: rgba(255,255,255,.02); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+    .mini-card h4 { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 10px; }
+    .mini-card strong { font-family: var(--fh); font-size: 26px; letter-spacing: -.7px; }
+    .bottom-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+    @media (max-width: 720px) { .dash-header { flex-direction: column; align-items: flex-start; } .two-col { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -19,32 +53,104 @@
       <div class="logo-dot"></div>
       <span class="d">D</span>akhilaa
     </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme">
+        <span class="knob" id="theme-toggle-icon">🌙</span>
+      </button>
+    </div>
   </nav>
 
   <div class="dash-wrap">
     <div class="dash-header">
       <div>
-        <div class="hero-badge">📊 Mains Plan</div>
-        <h1>Mains Dashboard</h1>
-        <p style="color:var(--light)">Overview and quick actions for the Mains plan subscribers.</p>
+        <div class="hero-badge">📘 Mains Student Dashboard</div>
+        <h1>Welcome back, Aarav</h1>
+        <p>Your Mains plan is active and your prep is tracking ahead of schedule.</p>
       </div>
-      <div>
-        <a class="btn-big btn-primary" href="pricing.html?plan=mains">Manage Plan</a>
+      <div class="header-actions">
+        <a class="btn-big btn-ghost" href="../index.html#pricing">View plans</a>
+        <a class="btn-big btn-primary" href="pricing.html?plan=mains">Manage plan</a>
       </div>
     </div>
 
-    <div class="plan-card">
-      <strong>Included:</strong> 10,000 Mains questions · 30 chapter tests
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="label">Questions solved</div>
+        <div class="value">4,280</div>
+        <div class="meta">+320 this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Chapter tests</div>
+        <div class="value">12</div>
+        <div class="meta">3 tests left this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Weak topics</div>
+        <div class="value">4</div>
+        <div class="meta">Targeting Physics + GS</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Study streak</div>
+        <div class="value">18d</div>
+        <div class="meta">Keep it going</div>
+      </div>
     </div>
 
-    <div class="plan-card">
-      <h3>Suggested actions</h3>
-      <ul>
-        <li>Start daily practice set</li>
-        <li>View weak-topic suggestions</li>
-        <li>Schedule chapter tests</li>
-      </ul>
+    <div class="two-col">
+      <section class="panel">
+        <div class="panel-title">Today's focus</div>
+        <div class="session">
+          <div class="session-head">
+            <span>Physics · Modern Physics</span>
+            <span>35 min</span>
+          </div>
+          <div class="progress"><span></span></div>
+          <p>Target: 15 questions + 1 rapid recap to strengthen your weak concept clusters.</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">Weak spots flagged</div>
+        <ul class="list">
+          <li><span>Modern Physics</span><span class="badge">High</span></li>
+          <li><span>Solid State</span><span class="badge">Medium</span></li>
+          <li><span>Current Affairs</span><span class="badge">Low</span></li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Recommended flow</div>
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h4>Practice</h4>
+          <strong>30</strong>
+          <div>Questions</div>
+        </div>
+        <div class="mini-card">
+          <h4>Revision</h4>
+          <strong>25</strong>
+          <div>Minutes</div>
+        </div>
+        <div class="mini-card">
+          <h4>Mock</h4>
+          <strong>1</strong>
+          <div>Mini test</div>
+        </div>
+        <div class="mini-card">
+          <h4>Focus</h4>
+          <strong>72%</strong>
+          <div>Target accuracy</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-actions">
+      <a class="btn-big btn-primary" href="planner.html">Open AI planner</a>
+      <a class="btn-big btn-ghost" href="diagnostic.html">Retake diagnostic</a>
     </div>
   </div>
+
+  <script src="../assets/js/theme.js"></script>
 </body>
 </html>

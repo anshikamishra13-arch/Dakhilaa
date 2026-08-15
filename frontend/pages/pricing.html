@@ -137,11 +137,16 @@
     document.getElementById('plan-name').textContent = plan.name;
     document.getElementById('plan-feat').textContent = plan.feat;
     document.getElementById('plan-amt').textContent  = '₹' + plan.amount.toLocaleString('en-IN') + '/yr';
-    // Update dashboard preview link
+    // Update the plan-specific student dashboard preview link.
     var dashLink = document.getElementById('plan-dashboard-link');
     if (dashLink) {
-      var map = { mains: 'dashboard-mains.html', advanced: 'dashboard-advanced.html', bundle: 'dashboard-bundle.html' };
+      var map = {
+        mains: 'dashboard-mains.html',
+        advanced: 'dashboard-advanced.html',
+        bundle: 'dashboard-bundle.html'
+      };
       dashLink.href = map[planKey] || 'dashboard-bundle.html';
+      dashLink.textContent = 'Open student dashboard';
     }
 
     var mode = 'signup'; // or 'login'
