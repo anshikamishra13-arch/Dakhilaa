@@ -83,3 +83,35 @@ html[data-theme="light"] .theme-toggle .knob {
 }
 
 .theme-toggle:hover { border-color: var(--orange); }
+
+/* Keep the highlighted pricing card readable in light mode */
+html[data-theme="light"] .pc.pop {
+  background: #fff8f4 !important;
+  border-color: rgba(232, 83, 42, 0.5) !important;
+  box-shadow: 0 16px 40px rgba(232, 83, 42, 0.12) !important;
+  color: #14181F !important;
+}
+
+html[data-theme="light"] .pc.pop .plan-name,
+html[data-theme="light"] .pc.pop .plan-per,
+html[data-theme="light"] .pc.pop .pf,
+html[data-theme="light"] .pc.pop .pf .ck,
+html[data-theme="light"] .pc.pop .pf .cx,
+html[data-theme="light"] .pc.pop .plan-amt,
+html[data-theme="light"] .pc.pop .btn-plan {
+  color: #14181F !important;
+}
+
+html[data-theme="light"] .pc.pop .plan-amt {
+  color: #E8532A !important;
+}
+
+html[data-theme="light"] .pc.pop .btn-plan {
+  background: #FF6B35 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 20px rgba(232, 83, 42, 0.18);
+}
+
+html[data-theme="light"] .pc.pop::after {
+  box-shadow: 0 12px 20px rgba(232, 83, 42, 0.15);
+}
