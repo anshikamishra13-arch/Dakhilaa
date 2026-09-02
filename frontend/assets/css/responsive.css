@@ -81,6 +81,7 @@
 @media (max-width: 480px) {
   /* Navbar */
   .nbtn-ghost { display: none; }
+  .share-btn { padding: 7px 10px; font-size: 12px; }
 
   /* Hero */
   .hero h1        { font-size: 32px; letter-spacing: -1px; }
