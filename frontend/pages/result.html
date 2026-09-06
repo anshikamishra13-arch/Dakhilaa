@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark light"/>
+  <script>
+    (function() {
+      var t = localStorage.getItem('dakhilaa-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.style.colorScheme = t;
+    })();
+  </script>
   <title>Dakhilaa — Your Diagnostic Report</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/styles.css"/>
@@ -56,6 +65,9 @@
     <div class="nav-logo" onclick="window.location.href='../index.html'">
       <div class="logo-dot"></div>
       <span class="d">D</span>akhilaa
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme"><span class="knob" id="theme-toggle-icon">🌙</span></button>
     </div>
   </nav>
 
@@ -130,6 +142,7 @@
 
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/theme.js"></script>
   <script>
   (function () {
     'use strict';
