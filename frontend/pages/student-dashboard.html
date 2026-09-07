@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="../assets/css/theme.css"/>
   <style>
     body { background: var(--bg); }
+    body[data-dashboard]:not(.auth-ready) .student-shell { visibility: hidden; }
     .student-shell { min-height: 100vh; padding: 86px 24px 64px; max-width: 1180px; margin: 0 auto; }
     .student-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 28px; }
     .student-header h1 { font-family: var(--fh); font-size: clamp(30px, 5vw, 48px); line-height: 1.05; letter-spacing: -1.8px; margin: 8px 0 10px; }
@@ -76,7 +77,7 @@
     @media (max-width: 560px) { .student-shell { padding: 82px 16px 48px; } .student-header, .profile-bar { flex-direction: column; align-items: flex-start; } .course-detail { text-align: left; } .overall { grid-template-columns: 1fr; justify-items: center; } .overall .progress-list { width: 100%; } .header-actions, .header-actions a { width: 100%; } .header-actions a { max-width: none; } }
   </style>
 </head>
-<body>
+<body data-dashboard>
   <nav>
     <div class="nav-logo" onclick="window.location.href='../index.html'">
       <div class="logo-dot"></div>
@@ -84,6 +85,7 @@
     </div>
     <div class="nav-right">
       <a class="nbtn nbtn-ghost" href="../index.html">Home</a>
+      <button class="nbtn nbtn-ghost" type="button" data-auth-logout>Log out</button>
       <button class="theme-toggle" id="theme-toggle-btn" aria-label="Switch theme"><span class="knob" id="theme-toggle-icon">🌙</span></button>
     </div>
   </nav>
@@ -92,7 +94,7 @@
     <header class="student-header">
       <div>
         <div class="hero-badge">Student workspace</div>
-        <h1>Welcome back, Aarav</h1>
+        <h1 id="student-welcome">Checking your account...</h1>
         <p>Here is your study snapshot for today. Keep your next session focused and measurable.</p>
       </div>
       <div class="header-actions">
@@ -103,8 +105,8 @@
 
     <section class="profile-bar" aria-label="Student and course details">
       <div class="profile">
-        <div class="avatar" aria-hidden="true">AM</div>
-        <div><strong>Aarav Mehta</strong><span>Class 12 · JEE aspirant</span></div>
+        <div class="avatar" id="student-avatar" aria-hidden="true">ST</div>
+        <div><strong id="student-profile-name">Student</strong><span id="student-profile-meta">Loading account...</span></div>
       </div>
       <div class="course-detail"><strong>JEE Main + Advanced 2026</strong>Bundle course · 68% course completion</div>
     </section>
@@ -171,5 +173,7 @@
   </main>
 
   <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/auth.js"></script>
 </body>
 </html>
