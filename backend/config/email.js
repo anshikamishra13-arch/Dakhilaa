@@ -1,6 +1,18 @@
 const nodemailer = require('nodemailer');
 
-const transporter = process.env.EMAIL_USER && process.env.EMAIL_PASSWORD
+const placeholderEmailValues = new Set([
+  'your-email@gmail.com',
+  'your-app-password',
+]);
+
+const hasEmailCredentials = Boolean(
+  process.env.EMAIL_USER &&
+  process.env.EMAIL_PASSWORD &&
+  !placeholderEmailValues.has(process.env.EMAIL_USER) &&
+  !placeholderEmailValues.has(process.env.EMAIL_PASSWORD)
+);
+
+const transporter = hasEmailCredentials
   ? nodemailer.createTransport({
       service: process.env.EMAIL_SERVICE || 'gmail',
       auth: {
