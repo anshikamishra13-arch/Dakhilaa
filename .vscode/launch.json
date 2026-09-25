@@ -2,11 +2,27 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Open Dakhilaa Frontend",
+      "name": "Dakhilaa Frontend",
       "type": "pwa-chrome",
       "request": "launch",
-      "url": "file:///D:/Dakhilaa-1/frontend/index.html",
+      "url": "file://${workspaceFolder}/frontend/index.html",
       "webRoot": "${workspaceFolder}/frontend"
+    },
+    {
+      "name": "Dakhilaa Backend",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Dakhilaa Full Stack",
+      "configurations": [
+        "Dakhilaa Backend",
+        "Dakhilaa Frontend"
+      ]
     }
   ]
 }
